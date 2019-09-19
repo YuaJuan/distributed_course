@@ -2,6 +2,7 @@ package mapreduce
 
 import (
 	"encoding/json"
+	"fmt"
 	"hash/fnv"
 	"log"
 	"os"
@@ -33,10 +34,11 @@ func doMap(
 
 	for i := 0; i < nReduce; i++ {
 		reduceFileName := reduceName(jobName, mapTask, i)
-		reduceFile, err := os.Open(reduceFileName)
+		fmt.Println("reduceName", reduceFileName)
+		reduceFile, err := os.Create(reduceFileName)
 
 		if err != nil {
-			log.Fatalf("open %s %s", reduceFileName, err)
+			log.Fatalf("open %s %s ,when map", reduceFileName, err)
 			return
 		}
 		defer reduceFile.Close()

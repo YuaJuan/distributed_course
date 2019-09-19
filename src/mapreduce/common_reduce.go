@@ -45,7 +45,7 @@ func doReduce(
 	}
 	sort.Strings(key)
 
-	mergeFile, err := os.Open(mergeName(jobName, reduceTask))
+	mergeFile, err := os.Create(mergeName(jobName, reduceTask))
 	if err != nil {
 		log.Fatalf("open %s ", err)
 	}
