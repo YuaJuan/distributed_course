@@ -34,7 +34,7 @@ func doMap(
 
 	for i := 0; i < nReduce; i++ {
 		reduceFileName := reduceName(jobName, mapTask, i)
-		fmt.Println("reduceName", reduceFileName)
+		fmt.Println("do map generate file :", reduceFileName)
 		reduceFile, err := os.Create(reduceFileName)
 
 		if err != nil {
