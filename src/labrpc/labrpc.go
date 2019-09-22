@@ -49,15 +49,17 @@ package labrpc
 //   pass svc to srv.AddService()
 //
 
-import "labgob"
-import "bytes"
-import "reflect"
-import "sync"
-import "log"
-import "strings"
-import "math/rand"
-import "time"
-import "sync/atomic"
+import (
+	"bytes"
+	"labgob"
+	"log"
+	"math/rand"
+	"reflect"
+	"strings"
+	"sync"
+	"sync/atomic"
+	"time"
+)
 
 type reqMsg struct {
 	endname  interface{} // name of sending ClientEnd
@@ -122,9 +124,9 @@ type Network struct {
 	enabled        map[interface{}]bool        // by end name
 	servers        map[interface{}]*Server     // servers, by name
 	connections    map[interface{}]interface{} // endname -> servername
-	endCh          chan reqMsg
-	done           chan struct{} // closed when Network is cleaned up
-	count          int32         // total RPC count, for statistics
+	endCh          chan reqMsg                 //用来模拟网络网络数据传输
+	done           chan struct{}               // closed when Network is cleaned up
+	count          int32                       // total RPC count, for statistics
 }
 
 func MakeNetwork() *Network {
@@ -206,8 +208,12 @@ func (rn *Network) IsServerDead(endname interface{}, servername interface{}, ser
 
 func (rn *Network) ProcessReq(req reqMsg) {
 	enabled, servername, server, reliable, longreordering := rn.ReadEndnameInfo(req.endname)
-
+	//DPrintf("enabled:%v, servername:%v, server:%v, reliable:%v, longreordering:%v", enabled, servername, server, reliable, longreordering)
 	if enabled && servername != nil && server != nil {
+
+		//如果要模拟网络不是可靠的请求下，会按照如下流程处理
+		//随机等待一小段时间
+		//等待完后，以一定地概率不处理结果，直接返回Client失败
 		if reliable == false {
 			// short delay
 			ms := (rand.Int() % 27)
@@ -258,6 +264,11 @@ func (rn *Network) ProcessReq(req reqMsg) {
 		// DeleteServer() before superseding the Persister.
 		serverDead = rn.IsServerDead(req.endname, servername, server)
 
+		//如果enabled为false，则模拟Server挂掉的情况，则直接返回失败。
+		//如果reliable为false，则模拟网络不可靠情况，有概率返回失败
+		//如果longreording为true，则以一定概率等待一定时间返回结果，以模拟网络包乱序地情况
+		//如果是longDelays为true，则会等待一段事件再返回结果，模拟高时延的情况
+
 		if replyOK == false || serverDead == true {
 			// server was killed while we were waiting; return error.
 			req.replyCh <- replyMsg{false, nil}
@@ -291,6 +302,7 @@ func (rn *Network) ProcessReq(req reqMsg) {
 		time.AfterFunc(time.Duration(ms)*time.Millisecond, func() {
 			req.replyCh <- replyMsg{false, nil}
 		})
+
 	}
 
 }
@@ -432,7 +444,7 @@ func MakeService(rcvr interface{}) *Service {
 	svc.rcvr = reflect.ValueOf(rcvr)
 	svc.name = reflect.Indirect(svc.rcvr).Type().Name()
 	svc.methods = map[string]reflect.Method{}
-
+	// NumMethod returns the number of exported methods in the type's method set.
 	for m := 0; m < svc.typ.NumMethod(); m++ {
 		method := svc.typ.Method(m)
 		mtype := method.Type

@@ -8,17 +8,20 @@ package raft
 // test with the original before submitting.
 //
 
-import "labrpc"
-import "log"
-import "sync"
-import "testing"
-import "runtime"
-import "math/rand"
-import crand "crypto/rand"
-import "math/big"
-import "encoding/base64"
-import "time"
-import "fmt"
+import (
+	"labrpc"
+	"log"
+	"math/rand"
+	"runtime"
+	"sync"
+	"testing"
+
+	crand "crypto/rand"
+	"encoding/base64"
+	"fmt"
+	"math/big"
+	"time"
+)
 
 func randstring(n int) string {
 	b := make([]byte, 2*n)
@@ -79,6 +82,7 @@ func make_config(t *testing.T, n int, unreliable bool) *config {
 	cfg.setunreliable(unreliable)
 
 	cfg.net.LongDelays(true)
+	fmt.Println("start ", cfg.n)
 
 	// create a full set of Rafts.
 	for i := 0; i < cfg.n; i++ {
@@ -165,6 +169,7 @@ func (cfg *config) start1(i int) {
 
 	// listen to messages from Raft indicating newly committed messages.
 	applyCh := make(chan ApplyMsg)
+
 	go func() {
 		for m := range applyCh {
 			err_msg := ""
@@ -210,6 +215,7 @@ func (cfg *config) start1(i int) {
 
 	svc := labrpc.MakeService(rf)
 	srv := labrpc.MakeServer()
+
 	srv.AddService(svc)
 	cfg.net.AddServer(i, srv)
 }
@@ -333,6 +339,7 @@ func (cfg *config) checkTerms() int {
 	for i := 0; i < cfg.n; i++ {
 		if cfg.connected[i] {
 			xterm, _ := cfg.rafts[i].GetState()
+			DPrintf("peer %v,term %v", i, xterm)
 			if term == -1 {
 				term = xterm
 			} else if term != xterm {
