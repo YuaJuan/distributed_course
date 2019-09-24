@@ -172,6 +172,7 @@ func (cfg *config) start1(i int) {
 
 	go func() {
 		for m := range applyCh {
+			DPrintf("peer %v applymsg %v", i, m)
 			err_msg := ""
 			if m.CommandValid == false {
 				// ignore other types of ApplyMsg
@@ -427,7 +428,7 @@ func (cfg *config) wait(index int, n int, startTerm int) interface{} {
 // as do the threads that read from applyCh.
 // returns index.
 // if retry==true, may submit the command multiple
-// times, in case a leader fails just after Start().
+// , in case a leader fails just after Starttimes().
 // if retry==false, calls Start() only once, in order
 // to simplify the early Lab 2B tests.
 func (cfg *config) one(cmd int, expectedServers int, retry bool) int {
@@ -459,6 +460,7 @@ func (cfg *config) one(cmd int, expectedServers int, retry bool) int {
 			t1 := time.Now()
 			for time.Since(t1).Seconds() < 2 {
 				nd, cmd1 := cfg.nCommitted(index)
+				DPrintf("====index %v cmd1 %v cmd %v,nd %v, eexpectedServers %v ", index, cmd1, cmd, nd, expectedServers)
 				if nd > 0 && nd >= expectedServers {
 					// committed
 					if cmd2, ok := cmd1.(int); ok && cmd2 == cmd {
