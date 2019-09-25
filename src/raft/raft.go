@@ -356,7 +356,8 @@ func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply)
 		rf.commitEntries()
 		return
 	}
-	if args.PrevLogIndex < len(rf.entries) && args.PrevLogTerm != rf.entries[args.PrevLogIndex].Term {
+	if args.PrevLogIndex < len(rf.entries) && args.PrevLogIndex >= 0 &&
+		args.PrevLogTerm != rf.entries[args.PrevLogIndex].Term {
 		DPrintf("peer %v term not match", rf.me)
 		return
 	}
@@ -398,14 +399,15 @@ func min(a int, b int) int {
 }
 
 func (rf *Raft) getPrevIndex(i int) int {
-	if rf.nextIndex[i] >= 1 {
-		return rf.nextIndex[i] - 1
-	}
-	return 0
+	return rf.nextIndex[i] - 1
 }
 
 func (rf *Raft) getPrevTerm(i int) int {
-	return rf.entries[rf.getPrevIndex(i)].Term
+	index := rf.getPrevIndex(i)
+	if index >= 0 {
+		return rf.entries[index].Term
+	}
+	return 0
 }
 
 func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesReq, reply *AppendEntriesReply) bool {
