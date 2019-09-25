@@ -337,7 +337,6 @@ func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply)
 	defer rf.persist()
 
 	InfoPrintf("peer %v recevie leader %v,peer's term:%v,leader's term:%v,leader's prevlogindex:%v", rf.me, args.LeaderId, rf.currentTerm, args.LeaderTerm, args.PrevLogIndex)
-	DPrintf("before peer %v : log %v  args's log %v", rf.me, rf.entries, args.Entries)
 	reply.Term = rf.currentTerm
 	reply.Success = false
 	if rf.currentTerm > args.LeaderTerm {
@@ -384,7 +383,6 @@ func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply)
 	if args.LeaderCommit > rf.commitId {
 		commit = min(args.LeaderCommit, len(rf.entries)-1)
 	}
-	DPrintf("after peer %v : log %v  args's log %v", rf.me, rf.entries, args.Entries)
 	rf.FollowcommitEntries(commit)
 
 	//rf.currentTerm = args.LeaderTerm
@@ -489,15 +487,8 @@ func (rf *Raft) broadcastHeartbeat() {
 				}
 				rf.mu.Lock()
 
-				// if rf.nextIndex[server] >= len(rf.entries)-1 || len(rf.entries) == 0 {
-				// 	return
-				// 	rf.mu.Unlock()
-				// }
 				entries := make([]LogEntries, 0)
-				//DPrintf("===peer %v, nextIndex %v,lastIndex %v", server, rf.nextIndex[server], len(rf.entries))
 				entries = append(entries, rf.entries[rf.nextIndex[server]:len(rf.entries)]...)
-				//DPrintf("heaertbeart entries %v", entries)
-				//DPrintf("to peer %v entries:%v", server, entries)
 				args := AppendEntriesReq{
 					LeaderTerm:   rf.currentTerm,
 					LeaderId:     rf.me,
@@ -513,7 +504,7 @@ func (rf *Raft) broadcastHeartbeat() {
 					InfoPrintf("sendAppendEntries  to peer %v faild . ", server)
 					continue
 				}
-				DPrintf("leader %v 's term is %v, reveiveReply from peer %v,success %v,term %v ", rf.me, rf.currentTerm, server, reply.Success, reply.Term)
+				InfoPrintf("leader %v 's term is %v, reveiveReply from peer %v,success %v,term %v ", rf.me, rf.currentTerm, server, reply.Success, reply.Term)
 
 				rf.mu.Lock()
 				if rf.state != Leader || rf.currentTerm != args.LeaderTerm {
@@ -525,7 +516,6 @@ func (rf *Raft) broadcastHeartbeat() {
 
 				if reply.Success {
 					atomic.AddInt32(&agreeCount, 1)
-					DPrintf("============agreecount %v =====", agreeCount)
 					rf.mu.Lock()
 					rf.nextIndex[server] += len(args.Entries)
 					if agreeCount > int32(len(rf.peers)/2) && rf.state == Leader {
