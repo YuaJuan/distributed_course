@@ -46,7 +46,7 @@ type ApplyMsg struct {
 }
 
 const (
-	HeartbeatInterval    = time.Duration(120) * time.Millisecond
+	HeartbeatInterval    = time.Duration(100) * time.Millisecond
 	ElectionTimeoutLower = time.Duration(300) * time.Millisecond
 	ElectionTimeoutUpper = time.Duration(400) * time.Millisecond
 )
@@ -184,17 +184,31 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 	defer rf.persist()
-	if args.CandidateTerm < rf.currentTerm ||
-		(rf.currentTerm == args.CandidateTerm && rf.voteFor != -1 && rf.voteFor != args.CandidateTerm) {
-		reply.CurrentTerm = rf.currentTerm
-		reply.VoteGranted = false
+	reply.VoteGranted = false
+	reply.CurrentTerm = rf.currentTerm
+
+	if args.CandidateTerm < rf.currentTerm {
+		return
+	}
+
+	//election restriction(5.4.1)
+	//Raft determines which of two logs is more up-to-date by comparing the index and term of the last entries
+	//in the logs.
+	//If the logs have last entries with different terms,then the log with the later term is more up-to-date.
+	//If the logs end with same term ,then whichever log is longer is more up-to-date.
+	lastindex := len(rf.entries) - 1
+	if args.LastLogTerm < rf.getLastTerm() ||
+		(args.LastLogTerm == rf.getLastTerm() && args.LastLogIndex < lastindex) {
+		rf.currentTerm = args.CandidateTerm
+		rf.convertState(Follower)
+		return
 	}
 
 	if args.CandidateTerm >= rf.currentTerm {
 		rf.voteFor = args.CandidateId
 		DPrintf("set peer %v currentTerm to %v", rf.me, rf.currentTerm)
 		rf.currentTerm = args.CandidateTerm
-		reply.CurrentTerm = args.CandidateTerm //这个地方的term应该是什么呢
+		//reply.CurrentTerm = args.CandidateTerm //这个地方的term应该是什么呢
 		reply.VoteGranted = true
 		rf.convertState(Follower)
 	}
@@ -267,13 +281,14 @@ func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *Reques
 //      then is- sues AppendEntries RPCs in parallel to each of the other servers to replicate the entry.
 //
 func (rf *Raft) Start(command interface{}) (int, int, bool) {
+
 	index := -1
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
 	isLeader := rf.state == Leader
 	if !isLeader {
 		return index, rf.currentTerm, isLeader
 	}
-	rf.mu.Lock()
-	defer rf.mu.Unlock()
 	if isLeader {
 		entry := LogEntries{
 			Command: command,
@@ -289,12 +304,25 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	return index, rf.currentTerm, isLeader
 }
 
+func (rf *Raft) FollowcommitEntries(commit int) {
+	InfoPrintf("peer %v commit from %v to %v", rf.me, rf.commitId, commit)
+	for i := rf.commitId + 1; i <= commit; i++ {
+		rf.applyCh <- ApplyMsg{
+			CommandValid: true,
+			Command:      rf.entries[i].Command,
+			CommandIndex: i,
+		}
+	}
+	rf.commitId = commit
+}
+
 //从当前到上一次都得提交
 func (rf *Raft) commitEntries() {
+	InfoPrintf("peer %v commit from %v to %v", rf.me, rf.commitId, len(rf.entries)-1)
 	if rf.commitId >= len(rf.entries)-1 {
 		return
 	}
-	InfoPrintf("peer %v commit from %v to %v", rf.me, rf.commitId, len(rf.entries)-1)
+
 	for i := rf.commitId + 1; i < len(rf.entries); i++ {
 		rf.applyCh <- ApplyMsg{
 			CommandValid: true,
@@ -337,21 +365,27 @@ func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply)
 
 	for i := 0; i < len(args.Entries); i++ {
 		index += 1
-		if index < len(rf.entries) && args.Entries[i].Term != rf.entries[index].Term {
+		if index >= len(rf.entries) {
+			break
+		}
+		if args.Entries[i].Term != rf.entries[index].Term {
 			rf.entries = rf.entries[:index]
 			rf.entries = append(rf.entries, args.Entries...)
 			break
 		}
 	}
-	if index == len(rf.entries) {
+	DPrintf("peer %v conflict index %v", rf.me, index)
+	if index == len(rf.entries) && args.PrevLogIndex == index-1 {
 		rf.entries = append(rf.entries, args.Entries...)
 	}
 
+	var commit int
 	if args.LeaderCommit > rf.commitId {
-		rf.commitId = min(args.LeaderCommit, len(rf.entries)-1)
+		commit = min(args.LeaderCommit, len(rf.entries)-1)
 	}
 	DPrintf("after peer %v : log %v  args's log %v", rf.me, rf.entries, args.Entries)
-	rf.commitEntries()
+	rf.FollowcommitEntries(commit)
+
 	//rf.currentTerm = args.LeaderTerm
 	reply.Success = true
 }
@@ -379,6 +413,21 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesReq, reply *App
 	return ok
 }
 
+func (rf *Raft) getLastTerm() int {
+	index := rf.getLastIndex()
+	if index > -1 {
+		return rf.entries[index].Term
+	}
+	return 0
+}
+
+func (rf *Raft) getLastIndex() int {
+	if len(rf.entries) > 0 {
+		return len(rf.entries) - 1
+	}
+	return -1
+}
+
 func (rf *Raft) startElection() {
 	defer rf.persist()
 	rf.electionTimer.Reset(randTimeDuration())
@@ -389,6 +438,8 @@ func (rf *Raft) startElection() {
 	args := &RequestVoteArgs{
 		CandidateTerm: rf.currentTerm,
 		CandidateId:   rf.me,
+		LastLogIndex:  rf.getLastIndex(),
+		LastLogTerm:   rf.getLastTerm(),
 	}
 	for i, _ := range rf.peers {
 		if i == rf.me {
@@ -423,7 +474,7 @@ func (rf *Raft) startElection() {
 }
 
 func (rf *Raft) broadcastHeartbeat() {
-	var agreeCount int32
+	var agreeCount int32 = 1
 	for i := 0; i < len(rf.peers); i++ {
 		if i == rf.me {
 			continue
@@ -458,7 +509,7 @@ func (rf *Raft) broadcastHeartbeat() {
 
 				if ok := rf.sendAppendEntries(server, &args, &reply); !ok {
 					InfoPrintf("sendAppendEntries  to peer %v faild . ", server)
-					return
+					continue
 				}
 				DPrintf("leader %v 's term is %v, reveiveReply from peer %v,success %v,term %v ", rf.me, rf.currentTerm, server, reply.Success, reply.Term)
 

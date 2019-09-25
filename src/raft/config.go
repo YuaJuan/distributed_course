@@ -172,7 +172,7 @@ func (cfg *config) start1(i int) {
 
 	go func() {
 		for m := range applyCh {
-			DPrintf("peer %v applymsg %v", i, m)
+			//DPrintf("peer %v applymsg %v", i, m)
 			err_msg := ""
 			if m.CommandValid == false {
 				// ignore other types of ApplyMsg
@@ -263,7 +263,7 @@ func (cfg *config) connect(i int) {
 
 // detach server i from the net.
 func (cfg *config) disconnect(i int) {
-	// fmt.Printf("disconnect(%d)\n", i)
+	fmt.Printf("disconnect(%d)\n", i)
 
 	cfg.connected[i] = false
 
@@ -460,7 +460,7 @@ func (cfg *config) one(cmd int, expectedServers int, retry bool) int {
 			t1 := time.Now()
 			for time.Since(t1).Seconds() < 2 {
 				nd, cmd1 := cfg.nCommitted(index)
-				DPrintf("====index %v cmd1 %v cmd %v,nd %v, eexpectedServers %v ", index, cmd1, cmd, nd, expectedServers)
+				//DPrintf("====index %v cmd1 %v cmd %v,nd %v, eexpectedServers %v ", index, cmd1, cmd, nd, expectedServers)
 				if nd > 0 && nd >= expectedServers {
 					// committed
 					if cmd2, ok := cmd1.(int); ok && cmd2 == cmd {
