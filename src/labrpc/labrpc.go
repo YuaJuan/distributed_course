@@ -393,6 +393,7 @@ func MakeServer() *Server {
 func (rs *Server) AddService(svc *Service) {
 	rs.mu.Lock()
 	defer rs.mu.Unlock()
+
 	rs.services[svc.name] = svc
 }
 
@@ -444,6 +445,7 @@ func MakeService(rcvr interface{}) *Service {
 	svc.rcvr = reflect.ValueOf(rcvr)
 	svc.name = reflect.Indirect(svc.rcvr).Type().Name()
 	svc.methods = map[string]reflect.Method{}
+
 	// NumMethod returns the number of exported methods in the type's method set.
 	for m := 0; m < svc.typ.NumMethod(); m++ {
 		method := svc.typ.Method(m)
@@ -452,7 +454,6 @@ func MakeService(rcvr interface{}) *Service {
 
 		//fmt.Printf("%v pp %v ni %v 1k %v 2k %v no %v\n",
 		//	mname, method.PkgPath, mtype.NumIn(), mtype.In(1).Kind(), mtype.In(2).Kind(), mtype.NumOut())
-
 		if method.PkgPath != "" || // capitalized?
 			mtype.NumIn() != 3 ||
 			//mtype.In(1).Kind() != reflect.Ptr ||

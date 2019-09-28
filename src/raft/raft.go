@@ -18,6 +18,9 @@ package raft
 //
 
 import (
+	"bytes"
+	"fmt"
+	"labgob"
 	"labrpc"
 	"math/rand"
 	"sync"
@@ -117,20 +120,24 @@ func (rf *Raft) GetState() (int, bool) {
 	return term, isleader
 }
 
+func (rf *Raft) encodeRaftState() []byte {
+	w := new(bytes.Buffer)
+	e := labgob.NewEncoder(w)
+	e.Encode(rf.currentTerm)
+	e.Encode(rf.voteFor)
+	e.Encode(rf.entries)
+	e.Encode(rf.commitId)
+
+	return w.Bytes()
+}
+
 //
 // save Raft's persistent state to stable storage,
 // where it can later be retrieved after a crash and restart.
 // see paper's Figure 2 for a description of what should be persistent.
 //
 func (rf *Raft) persist() {
-	// Your code here (2C).
-	// Example:
-	// w := new(bytes.Buffer)
-	// e := labgob.NewEncoder(w)
-	// e.Encode(rf.xxx)
-	// e.Encode(rf.yyy)
-	// data := w.Bytes()
-	// rf.persister.SaveRaftState(data)
+	rf.persister.SaveRaftState(rf.encodeRaftState())
 }
 
 //
@@ -142,17 +149,25 @@ func (rf *Raft) readPersist(data []byte) {
 	}
 	// Your code here (2C).
 	// Example:
-	// r := bytes.NewBuffer(data)
-	// d := labgob.NewDecoder(r)
-	// var xxx
-	// var yyy
-	// if d.Decode(&xxx) != nil ||
-	//    d.Decode(&yyy) != nil {
-	//   error...
-	// } else {
-	//   rf.xxx = xxx
-	//   rf.yyy = yyy
-	// }
+	r := bytes.NewBuffer(data)
+	d := labgob.NewDecoder(r)
+	var term, voteFor, commitId int
+	var entries []LogEntries
+
+	if d.Decode(&term) != nil ||
+		d.Decode(&voteFor) != nil ||
+		d.Decode(&entries) != nil ||
+		d.Decode(&commitId) != nil {
+		fmt.Println("decode error when readPersisit")
+	} else {
+		rf.mu.Lock()
+		rf.currentTerm = term
+		rf.voteFor = voteFor
+		rf.entries = append(rf.entries, entries...)
+		rf.commitId = commitId
+		DPrintf("recover rf.term %v,rf.commiId %v,rf.entries:%v", rf.currentTerm, rf.commitId, rf.entries)
+		rf.mu.Unlock()
+	}
 }
 
 //
@@ -217,54 +232,10 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	// Your code here (2A, 2B).
 }
 
-//
-// example code to send a RequestVote RPC to a server.
-// server is the index of the target server in rf.peers[].
-// expects RPC arguments in args.
-// fills in *reply with RPC reply, so caller should
-// pass &reply.
-// the types of the args and reply passed to Call() must be
-// the same as the types of the arguments declared in the
-// handler function (including whether they are pointers).
-//
-// The labrpc package simulates a lossy network, in which servers
-// may be unreachable, and in which requests and replies may be lost.
-// Call() sends a request and waits for a reply. If a reply arrives
-// within a timeout interval, Call() returns true; otherwise
-// Call() returns false. Thus Call() may not return for a while.
-// A false return can be caused by a dead server, a live server that
-// can't be reached, a lost request, or a lost reply.
-//
-// Call() is guaranteed to return (perhaps after a delay) *except* if the
-// handler function on the server side does not return.  Thus there
-// is no need to implement your own timeouts around Call().
-//
-// look at the comments in ../labrpc/labrpc.go for more details.
-//
-// if you're having trouble getting RPC to work, check that you've
-// capitalized all field names in structs passed over RPC, and
-// that the caller passes the address of the reply struct with &, not
-// the struct itself.
-//
 func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *RequestVoteReply) bool {
 	ok := rf.peers[server].Call("Raft.RequestVote", args, reply)
 	return ok
 }
-
-//
-// the service using Raft (e.g. a k/v server) wants to start
-// agreement on the next command to be appended to Raft's log. if this
-// server isn't the leader, returns false. otherwise start the
-// agreement and return immediately. there is no guarantee that this
-// command will ever be committed to the Raft log, since the leader
-// may fail or lose an election. even if the Raft instance has been killed,
-// this function should return gracefully.
-//
-// the first return value is the index that the command will appear at
-// if it's ever committed. the second return value is the current
-// term. the third return value is true if this server believes it is
-// the leader.
-//
 
 //在Appendentries RPC中发送new operation 给其他server
 
@@ -283,10 +254,11 @@ func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *Reques
 func (rf *Raft) Start(command interface{}) (int, int, bool) {
 
 	index := -1
+
 	rf.mu.Lock()
-	defer rf.mu.Unlock()
 	isLeader := rf.state == Leader
 	if !isLeader {
+		rf.mu.Unlock()
 		return index, rf.currentTerm, isLeader
 	}
 	if isLeader {
@@ -297,14 +269,21 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 		rf.entries = append(rf.entries, entry)
 		index = len(rf.entries) - 1
 		rf.persist()
+		rf.mu.Unlock()
+		rf.broadcastHeartbeat()
+		return index, rf.currentTerm, isLeader
 	}
 
 	// Your code here (2B).
-
+	rf.mu.Unlock()
 	return index, rf.currentTerm, isLeader
 }
 
 func (rf *Raft) FollowcommitEntries(commit int) {
+	defer rf.persist()
+	if rf.commitId+1 > commit {
+		return
+	}
 	InfoPrintf("peer %v commit from %v to %v", rf.me, rf.commitId, commit)
 	for i := rf.commitId + 1; i <= commit; i++ {
 		rf.applyCh <- ApplyMsg{
@@ -318,10 +297,12 @@ func (rf *Raft) FollowcommitEntries(commit int) {
 
 //从当前到上一次都得提交
 func (rf *Raft) commitEntries() {
-	InfoPrintf("peer %v commit from %v to %v", rf.me, rf.commitId, len(rf.entries)-1)
+	defer rf.persist()
+
 	if rf.commitId >= len(rf.entries)-1 {
 		return
 	}
+	InfoPrintf("peer %v commit from %v to %v", rf.me, rf.commitId, len(rf.entries)-1)
 
 	for i := rf.commitId + 1; i < len(rf.entries); i++ {
 		rf.applyCh <- ApplyMsg{
@@ -335,23 +316,32 @@ func (rf *Raft) commitEntries() {
 
 func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply) {
 	defer rf.persist()
-
-	InfoPrintf("peer %v recevie leader %v,peer's term:%v,leader's term:%v,leader's prevlogindex:%v", rf.me, args.LeaderId, rf.currentTerm, args.LeaderTerm, args.PrevLogIndex)
 	reply.Term = rf.currentTerm
 	reply.Success = false
+	InfoPrintf("peer %v recevie leader %v,peer's term:%v,leader's term:%v,leader's prevlogindex:%v", rf.me, args.LeaderId, rf.currentTerm, args.LeaderTerm, args.PrevLogIndex)
 	if rf.currentTerm > args.LeaderTerm {
-		rf.convertState(Follower)
 		return
 	}
+	//DPrintf("peer %v,before entries:%v", rf.me, rf.entries)
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
+
+	//注意：在任何时候发现比自己term更大的信息，都应该重新设置自己的term
+	if rf.currentTerm < args.LeaderTerm {
+		rf.currentTerm = args.LeaderTerm
+		rf.convertState(Follower)
+		//这里不能返回
+	}
+
+	//收到心跳，重置自己的electionTimer
 	if rf.state != Leader {
 		rf.electionTimer.Reset(randTimeDuration())
 	}
+
 	if len(rf.entries) == 0 {
 		rf.entries = append(rf.entries, args.Entries...)
 		reply.Success = true
-		DPrintf("afert insert peer %v entries %v", rf.me, rf.entries)
+		//DPrintf("afert insert peer %v entries %v", rf.me, rf.entries)
 		rf.commitEntries()
 		return
 	}
@@ -363,29 +353,32 @@ func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply)
 
 	index := args.PrevLogIndex
 
-	for i := 0; i < len(args.Entries); i++ {
+	var i int
+	for i = 0; i < len(args.Entries); i++ {
 		index += 1
 		if index >= len(rf.entries) {
 			break
 		}
 		if args.Entries[i].Term != rf.entries[index].Term {
 			rf.entries = rf.entries[:index]
-			rf.entries = append(rf.entries, args.Entries...)
+
+			//最开始这里没有考虑到i之前的是匹配的，不应该把整个参数都append过去
+			rf.entries = append(rf.entries, args.Entries[i:]...)
 			break
 		}
 	}
 	DPrintf("peer %v conflict index %v", rf.me, index)
-	if index == len(rf.entries) && args.PrevLogIndex == index-1 {
-		rf.entries = append(rf.entries, args.Entries...)
+	if index == len(rf.entries) && i >= 0 {
+		rf.entries = append(rf.entries, args.Entries[i:]...)
 	}
 
 	var commit int
 	if args.LeaderCommit > rf.commitId {
 		commit = min(args.LeaderCommit, len(rf.entries)-1)
 	}
-	rf.FollowcommitEntries(commit)
 
-	//rf.currentTerm = args.LeaderTerm
+	//DPrintf("peer %v , afeter entries:%v args.entries:%v", rf.me, rf.entries, args.Entries)
+	rf.FollowcommitEntries(commit)
 	reply.Success = true
 }
 
@@ -473,6 +466,7 @@ func (rf *Raft) startElection() {
 
 }
 
+//TODO : 提交只能从当前Term来提交
 func (rf *Raft) broadcastHeartbeat() {
 	var agreeCount int32 = 1
 	for i := 0; i < len(rf.peers); i++ {
@@ -482,12 +476,14 @@ func (rf *Raft) broadcastHeartbeat() {
 
 		go func(server int) {
 			for {
-				if len(rf.entries) <= 0 {
+				rf.mu.Lock()
+				if len(rf.entries) <= 0 || rf.state != Leader {
+					rf.mu.Unlock()
 					return
 				}
-				rf.mu.Lock()
 
 				entries := make([]LogEntries, 0)
+
 				entries = append(entries, rf.entries[rf.nextIndex[server]:len(rf.entries)]...)
 				args := AppendEntriesReq{
 					LeaderTerm:   rf.currentTerm,
@@ -500,8 +496,8 @@ func (rf *Raft) broadcastHeartbeat() {
 				rf.mu.Unlock()
 				var reply AppendEntriesReply
 
-				if ok := rf.sendAppendEntries(server, &args, &reply); !ok {
-					InfoPrintf("sendAppendEntries  to peer %v faild . ", server)
+				if ok := rf.sendAppendEntries(server, &args, &reply); !ok && rf.state == Leader {
+					//InfoPrintf("sendAppendEntries  to peer %v faild. ", server)
 					continue
 				}
 				InfoPrintf("leader %v 's term is %v, reveiveReply from peer %v,success %v,term %v ", rf.me, rf.currentTerm, server, reply.Success, reply.Term)
@@ -517,17 +513,20 @@ func (rf *Raft) broadcastHeartbeat() {
 				if reply.Success {
 					atomic.AddInt32(&agreeCount, 1)
 					rf.mu.Lock()
-					rf.nextIndex[server] += len(args.Entries)
+					rf.nextIndex[server] = args.PrevLogIndex + len(args.Entries)
 					if agreeCount > int32(len(rf.peers)/2) && rf.state == Leader {
+						//DPrintf("Leader %v entries:%v", rf.me, rf.entries)
 						rf.commitEntries()
 					}
 					rf.mu.Unlock()
+
 					break
 				} else {
 					if reply.Term > rf.currentTerm {
 						InfoPrintf("reply term %v > leader term %v,convert leader %v to follower .", reply.Term, rf.currentTerm, rf.me)
 						rf.convertState(Follower)
 					} else {
+						//TODO: more efficient
 						if rf.nextIndex[server] >= 1 {
 							rf.nextIndex[server] -= 1
 						}
@@ -586,6 +585,7 @@ func (rf *Raft) Kill() {
 //
 func Make(peers []*labrpc.ClientEnd, me int,
 	persister *Persister, applyCh chan ApplyMsg) *Raft {
+	DPrintf("Make raft server......")
 	rf := &Raft{}
 	rf.peers = peers
 	rf.persister = persister
