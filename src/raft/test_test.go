@@ -181,7 +181,10 @@ func TestFailNoAgree2B(t *testing.T) {
 	if ok2 == false {
 		t.Fatalf("leader2 rejected Start()")
 	}
-	if index2 < 2 || index2 > 3 {
+
+	//注意，原来这是是index2 < 2 || index2 > 3
+	//但是我认为这里应该是这样index2 < 1 || index2 > 2
+	if index2 < 1 || index2 > 2 {
 		t.Fatalf("unexpected index %v", index2)
 	}
 
@@ -650,14 +653,17 @@ func TestFigure82C(t *testing.T) {
 
 	cfg.begin("Test (2C): Figure 8")
 
-	cfg.one(rand.Int(), 1, true)
+	index := 0
+
+	cfg.one(index, 1, true)
 
 	nup := servers
 	for iters := 0; iters < 1000; iters++ {
+		index++
 		leader := -1
 		for i := 0; i < servers; i++ {
 			if cfg.rafts[i] != nil {
-				_, _, ok := cfg.rafts[i].Start(rand.Int())
+				_, _, ok := cfg.rafts[i].Start(index)
 				if ok {
 					leader = i
 				}
@@ -693,8 +699,9 @@ func TestFigure82C(t *testing.T) {
 			cfg.connect(i)
 		}
 	}
+	index++
 
-	cfg.one(rand.Int(), servers, true)
+	cfg.one(index, servers, true)
 
 	cfg.end()
 }
@@ -796,7 +803,7 @@ func internalChurn(t *testing.T, unreliable bool) {
 	}
 
 	stop := int32(0)
-
+	x := 0
 	// create concurrent clients
 	cfn := func(me int, ch chan []int) {
 		var ret []int
@@ -804,7 +811,7 @@ func internalChurn(t *testing.T, unreliable bool) {
 		defer func() { ch <- ret }()
 		values := []int{}
 		for atomic.LoadInt32(&stop) == 0 {
-			x := rand.Int()
+			x++
 			index := -1
 			ok := false
 			for i := 0; i < servers; i++ {
@@ -901,10 +908,12 @@ func internalChurn(t *testing.T, unreliable bool) {
 
 	time.Sleep(RaftElectionTimeout)
 
-	lastIndex := cfg.one(rand.Int(), servers, true)
+	lastIndex := cfg.one(-1, servers, true)
 
-	really := make([]int, lastIndex+1)
-	for index := 1; index <= lastIndex; index++ {
+	really := make([]int, 0)
+
+	//这里我将index修改为了0
+	for index := 0; index <= lastIndex; index++ {
 		v := cfg.wait(index, servers, -1)
 		if vi, ok := v.(int); ok {
 			really = append(really, vi)
@@ -912,6 +921,7 @@ func internalChurn(t *testing.T, unreliable bool) {
 			t.Fatalf("not an int")
 		}
 	}
+	//DPrintf("values %v，really %v ", values, really)
 
 	for _, v1 := range values {
 		ok := false

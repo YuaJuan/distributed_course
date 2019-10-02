@@ -81,11 +81,11 @@ type Raft struct {
 	state          NodeState
 
 	//2B
-	applyCh  chan ApplyMsg
-	commitId int
-	entries  []LogEntries
-
-	nextIndex []int //对于每个followr节点，下次应该检查哪个index
+	applyCh    chan ApplyMsg
+	commitId   int
+	entries    []LogEntries
+	matchIndex []int
+	nextIndex  []int //对于每个followr节点，下次应该检查哪个index
 
 }
 
@@ -104,8 +104,9 @@ type AppendEntriesReq struct {
 }
 
 type AppendEntriesReply struct {
-	Term    int
-	Success bool
+	Term       int
+	Success    bool
+	MatchIndex int
 }
 
 // return currentTerm and whether this server
@@ -262,6 +263,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 		return index, rf.currentTerm, isLeader
 	}
 	if isLeader {
+		//DPrintf("start command %v", command)
 		entry := LogEntries{
 			Command: command,
 			Term:    rf.currentTerm,
@@ -314,6 +316,9 @@ func (rf *Raft) commitEntries() {
 	rf.commitId = len(rf.entries) - 1
 }
 
+// 实现过程中忘记考虑了一种情况
+// leader的entries比follower更短，那么follower应该舍弃自己后面的entries
+
 func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply) {
 	defer rf.persist()
 	reply.Term = rf.currentTerm
@@ -322,7 +327,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply)
 	if rf.currentTerm > args.LeaderTerm {
 		return
 	}
-	//DPrintf("peer %v,before entries:%v", rf.me, rf.entries)
+	DPrintf("peer %v,before entries:%v", rf.me, rf.entries)
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 
@@ -334,51 +339,60 @@ func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply)
 	}
 
 	//收到心跳，重置自己的electionTimer
-	if rf.state != Leader {
-		rf.electionTimer.Reset(randTimeDuration())
-	}
 
-	if len(rf.entries) == 0 {
-		rf.entries = append(rf.entries, args.Entries...)
-		reply.Success = true
-		//DPrintf("afert insert peer %v entries %v", rf.me, rf.entries)
-		rf.commitEntries()
-		return
-	}
-	if args.PrevLogIndex < len(rf.entries) && args.PrevLogIndex >= 0 &&
-		args.PrevLogTerm != rf.entries[args.PrevLogIndex].Term {
+	rf.electionTimer.Reset(randTimeDuration())
+
+	// if len(rf.entries) == 0 {
+	// 	rf.entries = append(rf.entries, args.Entries...)
+	// 	reply.MatchIndex = len(rf.entries) - 1
+	// 	reply.Success = true
+	// 	//DPrintf("afert insert peer %v entries %v", rf.me, rf.entries)
+	// }
+	if args.PrevLogIndex >= len(rf.entries) || (args.PrevLogIndex >= 0 &&
+		args.PrevLogTerm != rf.entries[args.PrevLogIndex].Term) {
+		//当前term不匹配，一般来说所有term的index都不匹配。返回冲突entry以及存放该term的第一个index
+		//count := args.PrevLogIndex - 1
+		// if rf.entries[count].Term ！= rf.entries[args.PrevLogIndex].Term {
+		// 	break
+		// }
 		DPrintf("peer %v term not match", rf.me)
 		return
 	}
 
-	index := args.PrevLogIndex
+	/*
+		var i int
+		for i = 0; i < len(args.Entries); i++ {
+			index += 1
+			if index >= len(rf.entries) {
+				break
+			}
+			if args.Entries[i].Term != rf.entries[index].Term {
+				rf.entries = rf.entries[:index]
 
-	var i int
-	for i = 0; i < len(args.Entries); i++ {
-		index += 1
-		if index >= len(rf.entries) {
-			break
+				//最开始这里没有考虑到i之前的是匹配的，不应该把整个参数都append过去
+				rf.entries = append(rf.entries, args.Entries[i:]...)
+				break
+			}
 		}
-		if args.Entries[i].Term != rf.entries[index].Term {
-			rf.entries = rf.entries[:index]
-
-			//最开始这里没有考虑到i之前的是匹配的，不应该把整个参数都append过去
+		//DPrintf("peer %v conflict index %v", rf.me, index)
+		if index == len(rf.entries) && i >= 0 {
 			rf.entries = append(rf.entries, args.Entries[i:]...)
-			break
 		}
-	}
-	DPrintf("peer %v conflict index %v", rf.me, index)
-	if index == len(rf.entries) && i >= 0 {
-		rf.entries = append(rf.entries, args.Entries[i:]...)
-	}
+	*/
+
+	rf.entries = rf.entries[:args.PrevLogIndex+1]
+	rf.entries = append(rf.entries, args.Entries...)
 
 	var commit int
 	if args.LeaderCommit > rf.commitId {
 		commit = min(args.LeaderCommit, len(rf.entries)-1)
 	}
 
-	//DPrintf("peer %v , afeter entries:%v args.entries:%v", rf.me, rf.entries, args.Entries)
+	DPrintf("peer %v , afeter entries:%v args.entries:%v", rf.me, rf.entries, args.Entries)
+
 	rf.FollowcommitEntries(commit)
+
+	reply.MatchIndex = len(rf.entries) - 1
 	reply.Success = true
 }
 
@@ -466,9 +480,8 @@ func (rf *Raft) startElection() {
 
 }
 
-//TODO : 提交只能从当前Term来提交
 func (rf *Raft) broadcastHeartbeat() {
-	var agreeCount int32 = 1
+
 	for i := 0; i < len(rf.peers); i++ {
 		if i == rf.me {
 			continue
@@ -511,15 +524,22 @@ func (rf *Raft) broadcastHeartbeat() {
 				rf.mu.Unlock()
 
 				if reply.Success {
-					atomic.AddInt32(&agreeCount, 1)
 					rf.mu.Lock()
-					rf.nextIndex[server] = args.PrevLogIndex + len(args.Entries)
-					if agreeCount > int32(len(rf.peers)/2) && rf.state == Leader {
-						//DPrintf("Leader %v entries:%v", rf.me, rf.entries)
-						rf.commitEntries()
+					rf.matchIndex[server] = reply.MatchIndex
+					rf.nextIndex[server] = rf.matchIndex[server] + 1
+					//DPrintf("leader %v server %v matchIndex %v,entries %v", rf.me, server, reply.MatchIndex, rf.entries)
+					var agreeCount int32 = 1
+					for i := 0; i < len(rf.peers); i++ {
+						if rf.matchIndex[i] >= rf.matchIndex[server] {
+							atomic.AddInt32(&agreeCount, 1)
+						}
+
+						if atomic.LoadInt32(&agreeCount) > int32(len(rf.peers)/2) && rf.state == Leader && rf.currentTerm == rf.entries[reply.MatchIndex].Term {
+							rf.FollowcommitEntries(reply.MatchIndex)
+						}
+
 					}
 					rf.mu.Unlock()
-
 					break
 				} else {
 					if reply.Term > rf.currentTerm {
@@ -591,6 +611,7 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	rf.persister = persister
 	rf.me = me
 	rf.nextIndex = make([]int, len(peers))
+	rf.matchIndex = make([]int, len(peers))
 	rf.currentTerm = 0
 	rf.voteFor = -1
 	rf.commitId = -1

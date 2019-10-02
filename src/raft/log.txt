@@ -1,0 +1,498 @@
+start  5
+2019/10/02 15:12:21 Make raft server......
+2019/10/02 15:12:21 Make raft server......
+2019/10/02 15:12:21 Make raft server......
+2019/10/02 15:12:21 Make raft server......
+2019/10/02 15:12:21 Make raft server......
+Test (2B): no agreement if too many followers disconnect ...
+2019/10/02 15:12:21 peer 3 convert state to 2 at term 0 
+2019/10/02 15:12:21 peer 3 start election at term 1
+2019/10/02 15:12:21 set peer 2 currentTerm to 0
+2019/10/02 15:12:21 peer 2 revecive requestvote from 3
+2019/10/02 15:12:21 set peer 4 currentTerm to 0
+2019/10/02 15:12:21 peer 4 revecive requestvote from 3
+2019/10/02 15:12:21 set peer 0 currentTerm to 0
+2019/10/02 15:12:21 peer 0 revecive requestvote from 3
+2019/10/02 15:12:21 peer 3,receive votereply from 4, reply term:0,reply voteGranted:true
+2019/10/02 15:12:21 set peer 1 currentTerm to 0
+2019/10/02 15:12:21 peer 1 revecive requestvote from 3
+2019/10/02 15:12:21 peer 3,receive votereply from 2, reply term:0,reply voteGranted:true
+2019/10/02 15:12:21 peer 3 convert state to 3 at term 1 
+2019/10/02 15:12:21 peer 3,receive votereply from 0, reply term:0,reply voteGranted:true
+2019/10/02 15:12:21 peer 3,receive votereply from 1, reply term:0,reply voteGranted:true
+2019/10/02 15:12:21 start command 10
+2019/10/02 15:12:21 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:-1
+2019/10/02 15:12:21 peer 0,before entries:[]
+2019/10/02 15:12:21 peer 0 commit from -1 to 0
+2019/10/02 15:12:21 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:-1
+2019/10/02 15:12:21 peer 2,before entries:[]
+2019/10/02 15:12:21 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:-1
+2019/10/02 15:12:21 peer 2 commit from -1 to 0
+2019/10/02 15:12:21 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:-1
+2019/10/02 15:12:21 peer 4,before entries:[]
+2019/10/02 15:12:21 peer 4 commit from -1 to 0
+2019/10/02 15:12:21 peer 1,before entries:[]
+2019/10/02 15:12:21 peer 1 commit from -1 to 0
+2019/10/02 15:12:21 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:21 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:21 leader 3 server 0 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:21 peer 3 commit from -1 to 0
+2019/10/02 15:12:21 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:21 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:21 leader 3 server 1 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:21 leader 3 server 2 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:21 leader 3 server 4 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 0,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 2,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 4,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 1,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 4,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 1,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 0,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 2,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 2,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 4,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 0,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 1,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 2,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 1,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 4,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 peer 0,before entries:[{10 1}]
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 0,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 4,before entries:[{10 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 peer 1,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 peer 2,before entries:[{10 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 0,entries [{10 1}]
+2019/10/02 15:12:22 start command 20
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 1,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[{20 1}]
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 4,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 0,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[{20 1}]
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:0
+2019/10/02 15:12:22 peer 2,before entries:[{10 1}]
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[{20 1}]
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[{20 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 peer 3 commit from 0 to 1
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 1,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 1 commit from 0 to 1
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 4,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 peer 0,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 0 commit from 0 to 1
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 2 commit from 0 to 1
+2019/10/02 15:12:22 peer 4 commit from 0 to 1
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 1,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 0,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 peer 4,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 1,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 0,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 4,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 0,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 1,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 4,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 1,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 0,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:22 peer 4,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:22 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:22 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:22 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:22 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 0,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 1,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:23 peer 4,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 4,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 0,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 1,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 1,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 0,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 4,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:23 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 4,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 1,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 0,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:23 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 1 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 1,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 1 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 4 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 4,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 1,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 1 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 0 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 0,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 4 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 0 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 4,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 4 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 0,success true,term 1 
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 0 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:23 peer 0 convert state to 2 at term 1 
+2019/10/02 15:12:23 peer 0 start election at term 2
+2019/10/02 15:12:23 peer 1 convert state to 2 at term 1 
+2019/10/02 15:12:23 peer 1 start election at term 2
+2019/10/02 15:12:23 peer 4 convert state to 2 at term 1 
+2019/10/02 15:12:23 peer 4 start election at term 2
+2019/10/02 15:12:23 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:23 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:23 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:23 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:23 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:24 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:24 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:24 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 sendRequestVote failed to peer 3
+2019/10/02 15:12:24 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:24 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:24 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:24 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 peer 1 start election at term 3
+2019/10/02 15:12:24 peer 0 start election at term 3
+2019/10/02 15:12:24 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:24 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:24 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:24 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 peer 4 start election at term 3
+2019/10/02 15:12:24 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:24 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:24 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:24 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 sendRequestVote failed to peer 3
+2019/10/02 15:12:24 sendRequestVote failed to peer 0
+2019/10/02 15:12:24 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:24 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:24 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:24 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 peer 1 start election at term 4
+2019/10/02 15:12:24 peer 0 start election at term 4
+2019/10/02 15:12:24 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:24 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:24 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:24 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 sendRequestVote failed to peer 2
+2019/10/02 15:12:24 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:24 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:24 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:24 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 peer 4 start election at term 4
+2019/10/02 15:12:24 sendRequestVote failed to peer 0
+2019/10/02 15:12:24 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:24 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:24 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:24 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:24 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:24 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:24 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 peer 0 start election at term 5
+2019/10/02 15:12:24 peer 1 start election at term 5
+2019/10/02 15:12:24 sendRequestVote failed to peer 3
+2019/10/02 15:12:24 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:24 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:24 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:24 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:24 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:24 peer 4 start election at term 5
+2019/10/02 15:12:25 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:25 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:25 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:25 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:25 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:25 sendRequestVote failed to peer 3
+2019/10/02 15:12:25 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:25 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:25 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:25 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:25 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:25 sendRequestVote failed to peer 2
+2019/10/02 15:12:25 peer 0 start election at term 6
+2019/10/02 15:12:25 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:25 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:25 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:25 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:25 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:25 peer 1 start election at term 6
+2019/10/02 15:12:25 sendRequestVote failed to peer 2
+2019/10/02 15:12:25 sendRequestVote failed to peer 4
+2019/10/02 15:12:25 peer 4 start election at term 6
+2019/10/02 15:12:25 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:25 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:25 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:25 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:25 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+2019/10/02 15:12:25 peer 2 recevie leader 3,peer's term:1,leader's term:1,leader's prevlogindex:1
+2019/10/02 15:12:25 peer 2,before entries:[{10 1} {20 1}]
+2019/10/02 15:12:25 peer 2 , afeter entries:[{10 1} {20 1}] args.entries:[]
+2019/10/02 15:12:25 leader 3 's term is 1, reveiveReply from peer 2,success true,term 1 
+2019/10/02 15:12:25 leader 3 server 2 matchIndex 1,entries [{10 1} {20 1}]
+--- FAIL: TestFailNoAgree2B (3.89s)
+    test_test.go:170: 5 committed but no majority
+FAIL
+exit status 1
+FAIL	raft	3.900s

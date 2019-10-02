@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-const Debug = 1
-const InfoPrint = 1
+const Debug = 0
+const InfoPrint = 0
 
 func InfoPrintf(format string, a ...interface{}) (n int, err error) {
 	if InfoPrint > 0 {
