@@ -33,7 +33,7 @@ type Op struct {
 	Key      string
 	Value    string
 	ClientId int
-	Seq      int
+	Seq      int32
 }
 
 //1. 修改raft.ApplyMsg
@@ -44,7 +44,7 @@ type KVServer struct {
 	rf      *raft.Raft
 	applyCh chan raft.ApplyMsg
 
-	seqRecord map[int]int
+	seqRecord map[int]int32
 	resCh     map[int]chan Op
 
 	maxraftstate int // snapshot if log grows this big
@@ -72,8 +72,7 @@ func (kv *KVServer) Get(args *GetArgs, reply *GetReply) {
 	isLeader, res, err := kv.StartCommand(op)
 	reply.WrongLeader = isLeader
 	reply.Value = res
-	reply.Err = err
-
+	reply.ErrInfo = err
 }
 
 // 客户端提交指令后，要等待该指令被leader提交才能返回结果
@@ -102,10 +101,8 @@ func (kv *KVServer) PutAppend(args *PutAppendArgs, reply *PutAppendReply) {
 		Seq:      args.Seq,
 	}
 	isLeader, _, err := kv.StartCommand(op)
-
 	reply.WrongLeader = isLeader
-	reply.Err = err
-	//这里的结果应该怎么得到呢？raft中的提交是通过applyMsg返回的
+	reply.ErrInfo = err
 }
 
 //checkDup
@@ -114,7 +111,7 @@ func (kv *KVServer) checkDup(op Op) bool {
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 	if seq, ok := kv.seqRecord[op.ClientId]; ok {
-		//DPrintf("clientid %v oldseq %v curseq %v", op.ClientId, kv.seqRecord[op.ClientId], seq)
+
 		if seq >= op.Seq {
 			return true
 		}
@@ -124,51 +121,50 @@ func (kv *KVServer) checkDup(op Op) bool {
 }
 
 func (kv *KVServer) StartCommand(op Op) (bool, string, Err) {
-	//	InfoPrintf("%v start command name %v,key %v,value %v,clientId %v,seq %v.", kv.me, op.OpName, op.Key, op.Value, op.ClientId, op.Seq)
+	DPrintf("%v start command name %v,key %v,value %v,clientId %v,seq %v.", kv.me, op.OpName, op.Key, op.Value, op.ClientId, op.Seq)
 
 	//如何之前该请求已经执行了，则直接返回结果
 	if kv.checkDup(op) {
+		DPrintf("clientid %v have dup name %v key %v value %v seq %v", op.ClientId, op.OpName, op.Key, op.Value, op.Seq)
 		if op.OpName == GetOp {
-			return true, kv.database[op.Key], Err("")
-		} else {
-			return true, "", Err("")
-		}
-	}
-	_, _, isLeader := kv.rf.Start(op)
-	if !isLeader {
-		//InfoPrintf("not leader....")
-		return false, "", Err("")
-	}
-	kv.mu.Lock()
-	kv.resCh[op.ClientId*BASE+op.Seq] = make(chan Op, 1)
-	applyCh := kv.resCh[op.ClientId*BASE+op.Seq]
-	kv.mu.Unlock()
-	select {
-	case <-applyCh:
-		kv.mu.Lock()
-		InfoPrintf("%v kv %v startcommand receive name %v,key %v,value %v,clientId %v,seq %v.", op.ClientId*BASE+op.Seq, kv.me, op.OpName, op.Key, op.Value, op.ClientId, op.Seq)
-		if op.OpName == GetOp {
+			//DPrintf("dup client %v server %v Get %v found value %v database %v", op.ClientId, kv.me, op.Key, kv.database[op.Key], kv.database)
+			kv.mu.Lock()
 			if val, ok := kv.database[op.Key]; ok {
 				kv.mu.Unlock()
 				return true, val, Err("")
 			}
 			kv.mu.Unlock()
 			return true, "", NoKey
-		} else if op.OpName == PutOp {
-			kv.database[op.Key] = op.Value
-			//	DPrintf("Append key %v value %v", op.Key, op.Value)
-			//	DPrintf("after append:%v", kv.database[op.Key])ß
+		} else {
+			return true, "", Err("")
+		}
+	}
+	_, _, isLeader := kv.rf.Start(op)
+
+	if !isLeader {
+		return false, "", Err("")
+	}
+	kv.mu.Lock()
+	kv.resCh[op.ClientId*BASE+int(op.Seq)] = make(chan Op, 1)
+	applyCh := kv.resCh[op.ClientId*BASE+int(op.Seq)]
+	kv.mu.Unlock()
+	select {
+	case <-applyCh:
+		//TODO:sync map
+		InfoPrintf("%v kv %v startcommand receive name %v,key %v,value %v,clientId %v,seq %v.", op.ClientId*BASE+int(op.Seq), kv.me, op.OpName, op.Key, op.Value, op.ClientId, op.Seq)
+		if op.OpName == GetOp {
+			kv.mu.Lock()
+			if val, ok := kv.database[op.Key]; ok {
+				DPrintf("client %v server %v Get %v found value %v database %v ", op.ClientId, kv.me, op.Key, val, kv.database)
+				kv.mu.Unlock()
+				return true, val, Err("")
+			}
+			DPrintf("Get %v not found ", op.Key)
 			kv.mu.Unlock()
+			return true, "", NoKey
+		} else if op.OpName == PutOp {
 			return true, "", Err("")
 		} else {
-			if _, ok := kv.database[op.Key]; ok {
-				kv.database[op.Key] += op.Value
-			} else {
-				kv.database[op.Key] = op.Value
-			}
-			//DPrintf("Append key %v value %v", op.Key, op.Value)
-			//DPrintf("after append:%v", kv.database[op.Key])
-			kv.mu.Unlock()
 			return true, "", Err("")
 		}
 
@@ -219,8 +215,9 @@ func StartKVServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persiste
 
 	kv.applyCh = make(chan raft.ApplyMsg)
 	kv.database = make(map[string]string)
+
 	kv.resCh = make(map[int]chan Op)
-	kv.seqRecord = make(map[int]int)
+	kv.seqRecord = make(map[int]int32)
 	kv.rf = raft.Make(servers, me, persister, kv.applyCh)
 	//在这里循环读入applyC
 	kv.acceptMsg()
@@ -248,12 +245,18 @@ func (kv *KVServer) acceptMsg() {
 				}
 				kv.mu.Lock()
 				DPrintf("kvserve %v, applymsg seq %v,clientid %v,opname %v,key %v", kv.me, seq, clientId, op.OpName, op.Key)
-
 				kv.seqRecord[clientId] = seq
+				switch op.OpName {
+				case AppendOp:
+					kv.database[op.Key] += op.Value
+				case PutOp:
+					DPrintf("put value %v database %v ", op.Value, kv.database)
+					kv.database[op.Key] = op.Value
+				}
 				//DPrintf("kvserve %v wrtie to %v", kv.me, clientId*BASE+seq)
 
 				//这里之前没有处理，导致不是leader的进程一直阻塞在这里（因为没有进程来读取channel)
-				if ch, ok := kv.resCh[clientId*BASE+seq]; ok {
+				if ch, ok := kv.resCh[clientId*BASE+int(seq)]; ok {
 					select {
 					case <-ch:
 					default:

@@ -912,7 +912,7 @@ func internalChurn(t *testing.T, unreliable bool) {
 
 	really := make([]int, 0)
 
-	//这里我将index修改为了0
+	//这里我将index修改为了0,才通过了case
 	for index := 0; index <= lastIndex; index++ {
 		v := cfg.wait(index, servers, -1)
 		if vi, ok := v.(int); ok {

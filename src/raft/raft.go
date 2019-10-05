@@ -127,9 +127,20 @@ func (rf *Raft) encodeRaftState() []byte {
 	e.Encode(rf.currentTerm)
 	e.Encode(rf.voteFor)
 	e.Encode(rf.entries)
-	e.Encode(rf.commitId)
+	//e.Encode(rf.commitId)
 
 	return w.Bytes()
+}
+
+func (rf *Raft) SaveSnapshot(database map[string]string) {
+	w := new(bytes.Buffer)
+	e := labgob.NewEncoder(w)
+	e.Encode(rf.currentTerm)
+	e.Encode(rf.voteFor)
+	e.Encode(rf.entries)
+	e.Encode(rf.commitId)
+	e.Encode(database)
+	rf.persister.SaveRaftState(w.Bytes())
 }
 
 //
@@ -157,8 +168,7 @@ func (rf *Raft) readPersist(data []byte) {
 
 	if d.Decode(&term) != nil ||
 		d.Decode(&voteFor) != nil ||
-		d.Decode(&entries) != nil ||
-		d.Decode(&commitId) != nil {
+		d.Decode(&entries) != nil {
 		fmt.Println("decode error when readPersisit")
 	} else {
 		rf.mu.Lock()
@@ -263,7 +273,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 		return index, rf.currentTerm, isLeader
 	}
 	if isLeader {
-		//DPrintf("start command %v", command)
+		DPrintf("start command %v", command)
 		entry := LogEntries{
 			Command: command,
 			Term:    rf.currentTerm,
@@ -287,6 +297,8 @@ func (rf *Raft) FollowcommitEntries(commit int) {
 		return
 	}
 	InfoPrintf("peer %v commit from %v to %v", rf.me, rf.commitId, commit)
+	InfoPrintf("commit entries %v", rf.entries[rf.commitId+1:commit+1])
+
 	for i := rf.commitId + 1; i <= commit; i++ {
 		rf.applyCh <- ApplyMsg{
 			CommandValid: true,
@@ -304,7 +316,8 @@ func (rf *Raft) commitEntries() {
 	if rf.commitId >= len(rf.entries)-1 {
 		return
 	}
-	InfoPrintf("peer %v commit from %v to %v", rf.me, rf.commitId, len(rf.entries)-1)
+	InfoPrintf("leader %v commit from %v to %v", rf.me, rf.commitId, len(rf.entries)-1)
+	InfoPrintf("commit entries %v", rf.entries[rf.commitId+1:len(rf.entries)])
 
 	for i := rf.commitId + 1; i < len(rf.entries); i++ {
 		rf.applyCh <- ApplyMsg{
@@ -496,8 +509,9 @@ func (rf *Raft) broadcastHeartbeat() {
 				}
 
 				entries := make([]LogEntries, 0)
-
-				entries = append(entries, rf.entries[rf.nextIndex[server]:len(rf.entries)]...)
+				if rf.nextIndex[server] < len(rf.entries) && rf.nextIndex[server] >= 0 {
+					entries = append(entries, rf.entries[rf.nextIndex[server]:len(rf.entries)]...)
+				}
 				args := AppendEntriesReq{
 					LeaderTerm:   rf.currentTerm,
 					LeaderId:     rf.me,

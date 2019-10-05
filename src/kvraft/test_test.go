@@ -486,6 +486,7 @@ func TestOnePartition3A(t *testing.T) {
 	cfg.begin("Test: progress in majority (3A)")
 
 	p1, p2 := cfg.make_partition()
+	InfoPrintf("p1 %v p2 %v", p1, p2)
 	cfg.partition(p1, p2)
 
 	ckp1 := cfg.makeClient(p1)  // connect ckp1 to p1
@@ -505,6 +506,7 @@ func TestOnePartition3A(t *testing.T) {
 		Put(cfg, ckp2a, "1", "15")
 		done0 <- true
 	}()
+
 	go func() {
 		Get(cfg, ckp2b, "1") // different clerk in p2
 		done1 <- true
@@ -534,13 +536,13 @@ func TestOnePartition3A(t *testing.T) {
 
 	select {
 	case <-done0:
-	case <-time.After(30 * 100 * time.Millisecond):
+	case <-time.After(300 * 100 * time.Millisecond):
 		t.Fatalf("Put did not complete")
 	}
 
 	select {
 	case <-done1:
-	case <-time.After(30 * 100 * time.Millisecond):
+	case <-time.After(300 * 100 * time.Millisecond):
 		t.Fatalf("Get did not complete")
 	default:
 	}

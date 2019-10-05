@@ -1,0 +1,707 @@
+2019/10/05 21:28:22 StartKVServer.......
+2019/10/05 21:28:22 add service rfsvc..........................................
+2019/10/05 21:28:22 StartKVServer.......
+2019/10/05 21:28:22 add service rfsvc..........................................
+2019/10/05 21:28:22 StartKVServer.......
+2019/10/05 21:28:22 add service rfsvc..........................................
+2019/10/05 21:28:22 StartKVServer.......
+2019/10/05 21:28:22 add service rfsvc..........................................
+2019/10/05 21:28:22 StartKVServer.......
+2019/10/05 21:28:22 add service rfsvc..........................................
+Test: unreliable net, restarts, partitions, many clients (3A) ...
+2019/10/05 21:28:22 MakeClerk 1
+2019/10/05 21:28:22 MakeClerk 2
+2019/10/05 21:28:22 MakeClerk 3
+2019/10/05 21:28:22 MakeClerk 4
+2019/10/05 21:28:22 MakeClerk 5
+2019/10/05 21:28:22 MakeClerk 6
+2019/10/05 21:28:22 0 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:22 4 start command name Put,key 2,value ,clientId 4,seq 1.
+2019/10/05 21:28:22 0 start command name Put,key 3,value ,clientId 5,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:22 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:22 2 start command name Put,key 4,value ,clientId 1,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:22 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:22 1 start command name Put,key 2,value ,clientId 4,seq 1.
+2019/10/05 21:28:22 1 start command name Put,key 3,value ,clientId 5,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:22 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:22 4 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:22 0 start command name Put,key 4,value ,clientId 1,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:22 2 start command name Put,key 1,value ,clientId 2,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:22 3 start command name Put,key 2,value ,clientId 4,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:22 1 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:22 3 start command name Put,key 3,value ,clientId 5,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:22 3 start command name Put,key 4,value ,clientId 1,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:22 3 start command name Put,key 1,value ,clientId 2,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:22 2 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:22 0 start command name Put,key 2,value ,clientId 4,seq 1.
+2019/10/05 21:28:22 4 start command name Put,key 3,value ,clientId 5,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:22 4 start command name Put,key 4,value ,clientId 1,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:22 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:22 2 start command name Put,key 3,value ,clientId 5,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:22 1 start command name Put,key 4,value ,clientId 1,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:22 1 start command name Put,key 1,value ,clientId 2,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:22 0 start command name Put,key 3,value ,clientId 5,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:22 2 start command name Put,key 4,value ,clientId 1,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:22 4 start command name Put,key 1,value ,clientId 2,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:22 1 start command name Put,key 3,value ,clientId 5,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:22 0 start command name Put,key 4,value ,clientId 1,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:22 2 start command name Put,key 1,value ,clientId 2,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:22 3 start command name Put,key 3,value ,clientId 5,seq 1.
+2019/10/05 21:28:22 kvserve 1, applymsg seq 1,clientid 5,opname Put,key 3
+2019/10/05 21:28:22 kvserve 3, applymsg seq 1,clientid 5,opname Put,key 3
+2019/10/05 21:28:22 put value  database map[] 
+2019/10/05 21:28:22 put value  database map[] 
+2019/10/05 21:28:22 kvserve 4, applymsg seq 1,clientid 5,opname Put,key 3
+2019/10/05 21:28:22 put value  database map[] 
+2019/10/05 21:28:22 5001 kv 3 startcommand receive name Put,key 3,value ,clientId 5,seq 1.
+2019/10/05 21:28:22 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:22 kvserve 2, applymsg seq 1,clientid 5,opname Put,key 3
+2019/10/05 21:28:22 put value  database map[] 
+2019/10/05 21:28:22 3 start command name Put,key 4,value ,clientId 1,seq 1.
+2019/10/05 21:28:22 kvserve 0, applymsg seq 1,clientid 5,opname Put,key 3
+2019/10/05 21:28:22 put value  database map[] 
+2019/10/05 21:28:22 kvserve 3, applymsg seq 1,clientid 1,opname Put,key 4
+2019/10/05 21:28:22 put value  database map[3:] 
+2019/10/05 21:28:22 1001 kv 3 startcommand receive name Put,key 4,value ,clientId 1,seq 1.
+2019/10/05 21:28:22 3 start command name Append,key 4,value x 4 0 y,clientId 1,seq 2.
+2019/10/05 21:28:22 3 start command name Put,key 1,value ,clientId 2,seq 1.
+2019/10/05 21:28:22 kvserve 4, applymsg seq 1,clientid 1,opname Put,key 4
+2019/10/05 21:28:22 put value  database map[3:] 
+2019/10/05 21:28:22 kvserve 2, applymsg seq 1,clientid 1,opname Put,key 4
+2019/10/05 21:28:22 kvserve 1, applymsg seq 1,clientid 1,opname Put,key 4
+2019/10/05 21:28:22 put value  database map[3:] 
+2019/10/05 21:28:22 put value  database map[3:] 
+2019/10/05 21:28:22 kvserve 3, applymsg seq 2,clientid 1,opname Append,key 4
+2019/10/05 21:28:22 1002 kv 3 startcommand receive name Append,key 4,value x 4 0 y,clientId 1,seq 2.
+2019/10/05 21:28:22 kvserve 0, applymsg seq 1,clientid 1,opname Put,key 4
+2019/10/05 21:28:22 put value  database map[3:] 
+2019/10/05 21:28:22 kvserve 3, applymsg seq 1,clientid 2,opname Put,key 1
+2019/10/05 21:28:22 put value  database map[3: 4:x 4 0 y] 
+2019/10/05 21:28:22 2001 kv 3 startcommand receive name Put,key 1,value ,clientId 2,seq 1.
+2019/10/05 21:28:22 3 start command name Get,key 1,value ,clientId 2,seq 2.
+2019/10/05 21:28:22 kvserve 1, applymsg seq 2,clientid 1,opname Append,key 4
+2019/10/05 21:28:22 kvserve 1, applymsg seq 1,clientid 2,opname Put,key 1
+2019/10/05 21:28:22 put value  database map[3: 4:x 4 0 y] 
+2019/10/05 21:28:22 3 start command name Append,key 4,value x 4 1 y,clientId 1,seq 3.
+2019/10/05 21:28:22 kvserve 2, applymsg seq 2,clientid 1,opname Append,key 4
+2019/10/05 21:28:22 kvserve 2, applymsg seq 1,clientid 2,opname Put,key 1
+2019/10/05 21:28:22 put value  database map[3: 4:x 4 0 y] 
+2019/10/05 21:28:22 kvserve 0, applymsg seq 2,clientid 1,opname Append,key 4
+2019/10/05 21:28:22 kvserve 0, applymsg seq 1,clientid 2,opname Put,key 1
+2019/10/05 21:28:22 put value  database map[3: 4:x 4 0 y] 
+2019/10/05 21:28:22 kvserve 3, applymsg seq 2,clientid 2,opname Get,key 1
+2019/10/05 21:28:22 kvserve 3, applymsg seq 3,clientid 1,opname Append,key 4
+2019/10/05 21:28:22 2002 kv 3 startcommand receive name Get,key 1,value ,clientId 2,seq 2.
+2019/10/05 21:28:22 client 2 server 3 Get 1 found value  database map[1: 3: 4:x 4 0 yx 4 1 y] 
+2019/10/05 21:28:22 1003 kv 3 startcommand receive name Append,key 4,value x 4 1 y,clientId 1,seq 3.
+2019/10/05 21:28:22 3 start command name Get,key 4,value ,clientId 1,seq 4.
+2019/10/05 21:28:22 kvserve 4, applymsg seq 2,clientid 1,opname Append,key 4
+2019/10/05 21:28:22 kvserve 4, applymsg seq 1,clientid 2,opname Put,key 1
+2019/10/05 21:28:22 put value  database map[3: 4:x 4 0 y] 
+2019/10/05 21:28:22 kvserve 4, applymsg seq 2,clientid 2,opname Get,key 1
+2019/10/05 21:28:22 kvserve 4, applymsg seq 3,clientid 1,opname Append,key 4
+2019/10/05 21:28:22 kvserve 1, applymsg seq 2,clientid 2,opname Get,key 1
+2019/10/05 21:28:22 kvserve 1, applymsg seq 3,clientid 1,opname Append,key 4
+2019/10/05 21:28:22 kvserve 3, applymsg seq 4,clientid 1,opname Get,key 4
+2019/10/05 21:28:22 1004 kv 3 startcommand receive name Get,key 4,value ,clientId 1,seq 4.
+2019/10/05 21:28:22 client 1 server 3 Get 4 found value x 4 0 yx 4 1 y database map[1: 3: 4:x 4 0 yx 4 1 y] 
+2019/10/05 21:28:22 3 start command name Get,key 4,value ,clientId 1,seq 5.
+2019/10/05 21:28:22 kvserve 2, applymsg seq 2,clientid 2,opname Get,key 1
+2019/10/05 21:28:22 kvserve 2, applymsg seq 3,clientid 1,opname Append,key 4
+2019/10/05 21:28:22 kvserve 1, applymsg seq 4,clientid 1,opname Get,key 4
+2019/10/05 21:28:22 kvserve 0, applymsg seq 2,clientid 2,opname Get,key 1
+2019/10/05 21:28:22 kvserve 0, applymsg seq 3,clientid 1,opname Append,key 4
+2019/10/05 21:28:22 kvserve 0, applymsg seq 4,clientid 1,opname Get,key 4
+2019/10/05 21:28:22 kvserve 3, applymsg seq 5,clientid 1,opname Get,key 4
+2019/10/05 21:28:22 1005 kv 3 startcommand receive name Get,key 4,value ,clientId 1,seq 5.
+2019/10/05 21:28:22 client 1 server 3 Get 4 found value x 4 0 yx 4 1 y database map[1: 3: 4:x 4 0 yx 4 1 y] 
+2019/10/05 21:28:22 kvserve 4, applymsg seq 4,clientid 1,opname Get,key 4
+2019/10/05 21:28:22 4 start command name Put,key 3,value ,clientId 5,seq 1.
+2019/10/05 21:28:22 clientid 5 have dup name Put key 3 value  seq 1
+2019/10/05 21:28:22 kvserve 2, applymsg seq 4,clientid 1,opname Get,key 4
+2019/10/05 21:28:22 3 start command name Get,key 4,value ,clientId 1,seq 6.
+2019/10/05 21:28:22 kvserve 4, applymsg seq 5,clientid 1,opname Get,key 4
+2019/10/05 21:28:22 kvserve 0, applymsg seq 5,clientid 1,opname Get,key 4
+2019/10/05 21:28:22 kvserve 3, applymsg seq 6,clientid 1,opname Get,key 4
+2019/10/05 21:28:22 1006 kv 3 startcommand receive name Get,key 4,value ,clientId 1,seq 6.
+2019/10/05 21:28:22 client 1 server 3 Get 4 found value x 4 0 yx 4 1 y database map[1: 3: 4:x 4 0 yx 4 1 y] 
+2019/10/05 21:28:22 4 start command name Get,key 3,value ,clientId 5,seq 2.
+2019/10/05 21:28:22 3 start command name Append,key 4,value x 4 2 y,clientId 1,seq 7.
+2019/10/05 21:28:22 kvserve 1, applymsg seq 5,clientid 1,opname Get,key 4
+2019/10/05 21:28:23 kvserve 2, applymsg seq 5,clientid 1,opname Get,key 4
+2019/10/05 21:28:23 kvserve 1, applymsg seq 6,clientid 1,opname Get,key 4
+2019/10/05 21:28:23 kvserve 0, applymsg seq 6,clientid 1,opname Get,key 4
+2019/10/05 21:28:23 kvserve 3, applymsg seq 7,clientid 1,opname Append,key 4
+2019/10/05 21:28:23 1007 kv 3 startcommand receive name Append,key 4,value x 4 2 y,clientId 1,seq 7.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:23 kvserve 4, applymsg seq 6,clientid 1,opname Get,key 4
+2019/10/05 21:28:23 kvserve 2, applymsg seq 6,clientid 1,opname Get,key 4
+2019/10/05 21:28:23 kvserve 4, applymsg seq 7,clientid 1,opname Append,key 4
+2019/10/05 21:28:23 0 start command name Get,key 1,value ,clientId 2,seq 2.
+2019/10/05 21:28:23 clientid 2 have dup name Get key 1 value  seq 2
+2019/10/05 21:28:23 0 start command name Append,key 1,value x 1 0 y,clientId 2,seq 3.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:23 4 start command name Append,key 4,value x 4 2 y,clientId 1,seq 7.
+2019/10/05 21:28:23 clientid 1 have dup name Append key 4 value x 4 2 y seq 7
+2019/10/05 21:28:23 2 start command name Get,key 3,value ,clientId 5,seq 2.
+2019/10/05 21:28:23 4 start command name Get,key 4,value ,clientId 1,seq 8.
+2019/10/05 21:28:23 kvserve 0, applymsg seq 7,clientid 1,opname Append,key 4
+2019/10/05 21:28:23 1 start command name Append,key 1,value x 1 0 y,clientId 2,seq 3.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:23 0 start command name Get,key 3,value ,clientId 5,seq 2.
+2019/10/05 21:28:23 1 start command name Get,key 4,value ,clientId 1,seq 8.
+2019/10/05 21:28:23 4 start command name Append,key 1,value x 1 0 y,clientId 2,seq 3.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:23 2 start command name Get,key 4,value ,clientId 1,seq 8.
+2019/10/05 21:28:23 1 start command name Get,key 3,value ,clientId 5,seq 2.
+2019/10/05 21:28:23 2 start command name Append,key 1,value x 1 0 y,clientId 2,seq 3.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:23 0 start command name Get,key 4,value ,clientId 1,seq 8.
+2019/10/05 21:28:23 3 start command name Get,key 3,value ,clientId 5,seq 2.
+2019/10/05 21:28:23 kvserve 3, applymsg seq 2,clientid 5,opname Get,key 3
+2019/10/05 21:28:23 5002 kv 3 startcommand receive name Get,key 3,value ,clientId 5,seq 2.
+2019/10/05 21:28:23 client 5 server 3 Get 3 found value  database map[1: 3: 4:x 4 0 yx 4 1 yx 4 2 y] 
+2019/10/05 21:28:23 3 start command name Append,key 3,value x 3 0 y,clientId 5,seq 3.
+2019/10/05 21:28:23 kvserve 4, applymsg seq 2,clientid 5,opname Get,key 3
+2019/10/05 21:28:23 kvserve 0, applymsg seq 2,clientid 5,opname Get,key 3
+2019/10/05 21:28:23 kvserve 3, applymsg seq 3,clientid 5,opname Append,key 3
+2019/10/05 21:28:23 5003 kv 3 startcommand receive name Append,key 3,value x 3 0 y,clientId 5,seq 3.
+2019/10/05 21:28:23 3 start command name Append,key 3,value x 3 1 y,clientId 5,seq 4.
+2019/10/05 21:28:23 kvserve 0, applymsg seq 3,clientid 5,opname Append,key 3
+2019/10/05 21:28:23 kvserve 4, applymsg seq 3,clientid 5,opname Append,key 3
+2019/10/05 21:28:23 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:23 kvserve 3, applymsg seq 4,clientid 5,opname Append,key 3
+2019/10/05 21:28:23 5004 kv 3 startcommand receive name Append,key 3,value x 3 1 y,clientId 5,seq 4.
+2019/10/05 21:28:23 3 start command name Get,key 3,value ,clientId 5,seq 5.
+2019/10/05 21:28:23 kvserve 0, applymsg seq 4,clientid 5,opname Append,key 3
+2019/10/05 21:28:23 kvserve 4, applymsg seq 4,clientid 5,opname Append,key 3
+2019/10/05 21:28:23 kvserve 3, applymsg seq 5,clientid 5,opname Get,key 3
+2019/10/05 21:28:23 5005 kv 3 startcommand receive name Get,key 3,value ,clientId 5,seq 5.
+2019/10/05 21:28:23 client 5 server 3 Get 3 found value x 3 0 yx 3 1 y database map[1: 3:x 3 0 yx 3 1 y 4:x 4 0 yx 4 1 yx 4 2 y] 
+2019/10/05 21:28:23 3 start command name Get,key 4,value ,clientId 1,seq 8.
+2019/10/05 21:28:23 3 start command name Get,key 3,value ,clientId 5,seq 6.
+2019/10/05 21:28:23 kvserve 0, applymsg seq 5,clientid 5,opname Get,key 3
+2019/10/05 21:28:23 kvserve 4, applymsg seq 5,clientid 5,opname Get,key 3
+2019/10/05 21:28:23 kvserve 3, applymsg seq 8,clientid 1,opname Get,key 4
+2019/10/05 21:28:23 kvserve 3, applymsg seq 6,clientid 5,opname Get,key 3
+2019/10/05 21:28:23 1008 kv 3 startcommand receive name Get,key 4,value ,clientId 1,seq 8.
+2019/10/05 21:28:23 client 1 server 3 Get 4 found value x 4 0 yx 4 1 yx 4 2 y database map[1: 3:x 3 0 yx 3 1 y 4:x 4 0 yx 4 1 yx 4 2 y] 
+2019/10/05 21:28:23 5006 kv 3 startcommand receive name Get,key 3,value ,clientId 5,seq 6.
+2019/10/05 21:28:23 client 5 server 3 Get 3 found value x 3 0 yx 3 1 y database map[1: 3:x 3 0 yx 3 1 y 4:x 4 0 yx 4 1 yx 4 2 y] 
+2019/10/05 21:28:23 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:23 kvserve 0, applymsg seq 8,clientid 1,opname Get,key 4
+2019/10/05 21:28:23 kvserve 0, applymsg seq 6,clientid 5,opname Get,key 3
+2019/10/05 21:28:23 kvserve 4, applymsg seq 8,clientid 1,opname Get,key 4
+2019/10/05 21:28:23 kvserve 4, applymsg seq 6,clientid 5,opname Get,key 3
+2019/10/05 21:28:23 0 start command name Append,key 1,value x 1 0 y,clientId 2,seq 3.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:23 4 start command name Append,key 3,value x 3 2 y,clientId 5,seq 7.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:23 4 start command name Get,key 4,value ,clientId 1,seq 9.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:23 1 start command name Get,key 4,value ,clientId 1,seq 9.
+2019/10/05 21:28:23 2 start command name Append,key 3,value x 3 2 y,clientId 5,seq 7.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:23 4 start command name Append,key 1,value x 1 0 y,clientId 2,seq 3.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:23 0 start command name Append,key 3,value x 3 2 y,clientId 5,seq 7.
+2019/10/05 21:28:23 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:24 2 start command name Append,key 1,value x 1 0 y,clientId 2,seq 3.
+2019/10/05 21:28:24 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:24 0 start command name Get,key 4,value ,clientId 1,seq 9.
+2019/10/05 21:28:24 1 start command name Append,key 3,value x 3 2 y,clientId 5,seq 7.
+2019/10/05 21:28:24 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:24 3 start command name Append,key 1,value x 1 0 y,clientId 2,seq 3.
+2019/10/05 21:28:24 3 start command name Get,key 4,value ,clientId 1,seq 9.
+2019/10/05 21:28:24 kvserve 3, applymsg seq 3,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 2003 kv 3 startcommand receive name Append,key 1,value x 1 0 y,clientId 2,seq 3.
+2019/10/05 21:28:24 kvserve 4, applymsg seq 3,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 3 start command name Append,key 1,value x 1 1 y,clientId 2,seq 4.
+2019/10/05 21:28:24 kvserve 3, applymsg seq 9,clientid 1,opname Get,key 4
+2019/10/05 21:28:24 1009 kv 3 startcommand receive name Get,key 4,value ,clientId 1,seq 9.
+2019/10/05 21:28:24 client 1 server 3 Get 4 found value x 4 0 yx 4 1 yx 4 2 y database map[1:x 1 0 y 3:x 3 0 yx 3 1 y 4:x 4 0 yx 4 1 yx 4 2 y] 
+2019/10/05 21:28:24 kvserve 0, applymsg seq 3,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 3 start command name Append,key 4,value x 4 3 y,clientId 1,seq 10.
+2019/10/05 21:28:24 kvserve 4, applymsg seq 9,clientid 1,opname Get,key 4
+2019/10/05 21:28:24 kvserve 3, applymsg seq 4,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 2004 kv 3 startcommand receive name Append,key 1,value x 1 1 y,clientId 2,seq 4.
+2019/10/05 21:28:24 3 start command name Append,key 1,value x 1 2 y,clientId 2,seq 5.
+2019/10/05 21:28:24 3 start command name Append,key 3,value x 3 2 y,clientId 5,seq 7.
+2019/10/05 21:28:24 kvserve 0, applymsg seq 9,clientid 1,opname Get,key 4
+2019/10/05 21:28:24 kvserve 4, applymsg seq 4,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 kvserve 3, applymsg seq 10,clientid 1,opname Append,key 4
+2019/10/05 21:28:24 1010 kv 3 startcommand receive name Append,key 4,value x 4 3 y,clientId 1,seq 10.
+2019/10/05 21:28:24 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:24 kvserve 0, applymsg seq 4,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 kvserve 3, applymsg seq 5,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 2005 kv 3 startcommand receive name Append,key 1,value x 1 2 y,clientId 2,seq 5.
+2019/10/05 21:28:24 3 start command name Get,key 1,value ,clientId 2,seq 6.
+2019/10/05 21:28:24 kvserve 0, applymsg seq 10,clientid 1,opname Append,key 4
+2019/10/05 21:28:24 kvserve 0, applymsg seq 5,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 kvserve 4, applymsg seq 10,clientid 1,opname Append,key 4
+2019/10/05 21:28:24 kvserve 4, applymsg seq 5,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 4 start command name Append,key 4,value x 4 3 y,clientId 1,seq 10.
+2019/10/05 21:28:24 clientid 1 have dup name Append key 4 value x 4 3 y seq 10
+2019/10/05 21:28:24 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:24 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:24 2 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:24 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:24 kvserve 2, applymsg seq 7,clientid 1,opname Append,key 4
+2019/10/05 21:28:24 kvserve 2, applymsg seq 2,clientid 5,opname Get,key 3
+2019/10/05 21:28:24 kvserve 2, applymsg seq 3,clientid 5,opname Append,key 3
+2019/10/05 21:28:24 kvserve 2, applymsg seq 4,clientid 5,opname Append,key 3
+2019/10/05 21:28:24 kvserve 2, applymsg seq 5,clientid 5,opname Get,key 3
+2019/10/05 21:28:24 kvserve 2, applymsg seq 8,clientid 1,opname Get,key 4
+2019/10/05 21:28:24 kvserve 2, applymsg seq 6,clientid 5,opname Get,key 3
+2019/10/05 21:28:24 kvserve 2, applymsg seq 3,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 kvserve 2, applymsg seq 9,clientid 1,opname Get,key 4
+2019/10/05 21:28:24 kvserve 2, applymsg seq 4,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 kvserve 2, applymsg seq 10,clientid 1,opname Append,key 4
+2019/10/05 21:28:24 kvserve 2, applymsg seq 5,clientid 2,opname Append,key 1
+2019/10/05 21:28:24 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:24 3 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:24 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:24 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:25 1 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:25 2 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:25 0 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:25 time out when execute opname Put, clientid 3, seq 1,key 0
+2019/10/05 21:28:25 timeout when call putAppend to 4 .
+2019/10/05 21:28:25 time out when execute opname Put, clientid 4, seq 1,key 2
+2019/10/05 21:28:25 timeout when call putAppend to 4 .
+2019/10/05 21:28:25 3 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:25 kvserve 1, applymsg seq 7,clientid 1,opname Append,key 4
+2019/10/05 21:28:25 kvserve 1, applymsg seq 2,clientid 5,opname Get,key 3
+2019/10/05 21:28:25 kvserve 1, applymsg seq 3,clientid 5,opname Append,key 3
+2019/10/05 21:28:25 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:25 kvserve 1, applymsg seq 4,clientid 5,opname Append,key 3
+2019/10/05 21:28:25 kvserve 1, applymsg seq 5,clientid 5,opname Get,key 3
+2019/10/05 21:28:25 kvserve 1, applymsg seq 8,clientid 1,opname Get,key 4
+2019/10/05 21:28:25 kvserve 1, applymsg seq 6,clientid 5,opname Get,key 3
+2019/10/05 21:28:25 kvserve 1, applymsg seq 3,clientid 2,opname Append,key 1
+2019/10/05 21:28:25 kvserve 1, applymsg seq 9,clientid 1,opname Get,key 4
+2019/10/05 21:28:25 kvserve 1, applymsg seq 4,clientid 2,opname Append,key 1
+2019/10/05 21:28:25 kvserve 1, applymsg seq 10,clientid 1,opname Append,key 4
+2019/10/05 21:28:25 kvserve 1, applymsg seq 5,clientid 2,opname Append,key 1
+2019/10/05 21:28:25 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:25 3 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:25 0 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:25 4 start command name Put,key 2,value ,clientId 4,seq 1.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:25 kvserve 4, applymsg seq 7,clientid 5,opname Append,key 3
+2019/10/05 21:28:25 kvserve 4, applymsg seq 6,clientid 2,opname Get,key 1
+2019/10/05 21:28:25 kvserve 4, applymsg seq 1,clientid 4,opname Put,key 2
+2019/10/05 21:28:25 put value  database map[1:x 1 0 yx 1 1 yx 1 2 y 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:25 4001 kv 4 startcommand receive name Put,key 2,value ,clientId 4,seq 1.
+2019/10/05 21:28:25 4 start command name Get,key 2,value ,clientId 4,seq 2.
+2019/10/05 21:28:25 kvserve 1, applymsg seq 7,clientid 5,opname Append,key 3
+2019/10/05 21:28:25 kvserve 1, applymsg seq 6,clientid 2,opname Get,key 1
+2019/10/05 21:28:25 kvserve 1, applymsg seq 1,clientid 4,opname Put,key 2
+2019/10/05 21:28:25 put value  database map[1:x 1 0 yx 1 1 yx 1 2 y 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:25 kvserve 0, applymsg seq 7,clientid 5,opname Append,key 3
+2019/10/05 21:28:25 kvserve 0, applymsg seq 6,clientid 2,opname Get,key 1
+2019/10/05 21:28:25 kvserve 0, applymsg seq 1,clientid 4,opname Put,key 2
+2019/10/05 21:28:25 put value  database map[1:x 1 0 yx 1 1 yx 1 2 y 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:25 kvserve 4, applymsg seq 2,clientid 4,opname Get,key 2
+2019/10/05 21:28:25 4002 kv 4 startcommand receive name Get,key 2,value ,clientId 4,seq 2.
+2019/10/05 21:28:25 client 4 server 4 Get 2 found value  database map[1:x 1 0 yx 1 1 yx 1 2 y 2: 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:25 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:25 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:25 kvserve 1, applymsg seq 2,clientid 4,opname Get,key 2
+2019/10/05 21:28:25 kvserve 0, applymsg seq 2,clientid 4,opname Get,key 2
+2019/10/05 21:28:25 1 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:25 1 start command name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:25 2 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:25 3 start command name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:25 0 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:25 3 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:25 0 start command name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:25 3 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:25 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:26 0 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:26 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:26 2 start command name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:26 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:26 4 start command name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:26 kvserve 4, applymsg seq 1,clientid 3,opname Put,key 0
+2019/10/05 21:28:26 put value  database map[1:x 1 0 yx 1 1 yx 1 2 y 2: 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:26 3001 kv 4 startcommand receive name Put,key 0,value ,clientId 3,seq 1.
+2019/10/05 21:28:26 1 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:26 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:26 4 start command name Get,key 0,value ,clientId 3,seq 2.
+2019/10/05 21:28:26 kvserve 0, applymsg seq 1,clientid 3,opname Put,key 0
+2019/10/05 21:28:26 put value  database map[1:x 1 0 yx 1 1 yx 1 2 y 2: 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:26 kvserve 1, applymsg seq 1,clientid 3,opname Put,key 0
+2019/10/05 21:28:26 put value  database map[1:x 1 0 yx 1 1 yx 1 2 y 2: 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:26 kvserve 4, applymsg seq 2,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 3002 kv 4 startcommand receive name Get,key 0,value ,clientId 3,seq 2.
+2019/10/05 21:28:26 client 3 server 4 Get 0 found value  database map[0: 1:x 1 0 yx 1 1 yx 1 2 y 2: 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:26 4 start command name Append,key 0,value x 0 0 y,clientId 3,seq 3.
+2019/10/05 21:28:26 kvserve 1, applymsg seq 2,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 1 start command name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:26 kvserve 0, applymsg seq 2,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 kvserve 4, applymsg seq 3,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 3003 kv 4 startcommand receive name Append,key 0,value x 0 0 y,clientId 3,seq 3.
+2019/10/05 21:28:26 4 start command name Get,key 0,value ,clientId 3,seq 4.
+2019/10/05 21:28:26 kvserve 0, applymsg seq 3,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 1, applymsg seq 3,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 4, applymsg seq 4,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 3004 kv 4 startcommand receive name Get,key 0,value ,clientId 3,seq 4.
+2019/10/05 21:28:26 client 3 server 4 Get 0 found value x 0 0 y database map[0:x 0 0 y 1:x 1 0 yx 1 1 yx 1 2 y 2: 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:26 2 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:26 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:26 4 start command name Append,key 0,value x 0 1 y,clientId 3,seq 5.
+2019/10/05 21:28:26 kvserve 1, applymsg seq 4,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 kvserve 0, applymsg seq 4,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 kvserve 4, applymsg seq 5,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 3005 kv 4 startcommand receive name Append,key 0,value x 0 1 y,clientId 3,seq 5.
+2019/10/05 21:28:26 4 start command name Append,key 0,value x 0 2 y,clientId 3,seq 6.
+2019/10/05 21:28:26 kvserve 1, applymsg seq 5,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 0, applymsg seq 5,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 4, applymsg seq 6,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 3006 kv 4 startcommand receive name Append,key 0,value x 0 2 y,clientId 3,seq 6.
+2019/10/05 21:28:26 3 start command name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:26 4 start command name Get,key 0,value ,clientId 3,seq 7.
+2019/10/05 21:28:26 kvserve 0, applymsg seq 6,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 1, applymsg seq 6,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 4, applymsg seq 7,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 3007 kv 4 startcommand receive name Get,key 0,value ,clientId 3,seq 7.
+2019/10/05 21:28:26 client 3 server 4 Get 0 found value x 0 0 yx 0 1 yx 0 2 y database map[0:x 0 0 yx 0 1 yx 0 2 y 1:x 1 0 yx 1 1 yx 1 2 y 2: 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:26 4 start command name Append,key 0,value x 0 3 y,clientId 3,seq 8.
+2019/10/05 21:28:26 kvserve 0, applymsg seq 7,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 0 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:26 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:26 kvserve 1, applymsg seq 7,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 0 start command name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:26 3 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:26 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:26 2 start command name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:26 4 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:26 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:26 4 start command name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:26 1 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:26 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:26 kvserve 2, applymsg seq 7,clientid 5,opname Append,key 3
+2019/10/05 21:28:26 kvserve 2, applymsg seq 6,clientid 2,opname Get,key 1
+2019/10/05 21:28:26 kvserve 2, applymsg seq 1,clientid 4,opname Put,key 2
+2019/10/05 21:28:26 put value  database map[1:x 1 0 yx 1 1 yx 1 2 y 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:26 kvserve 2, applymsg seq 2,clientid 4,opname Get,key 2
+2019/10/05 21:28:26 kvserve 2, applymsg seq 1,clientid 3,opname Put,key 0
+2019/10/05 21:28:26 put value  database map[1:x 1 0 yx 1 1 yx 1 2 y 2: 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:26 kvserve 2, applymsg seq 2,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 kvserve 2, applymsg seq 3,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 2, applymsg seq 4,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 kvserve 2, applymsg seq 5,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 2, applymsg seq 6,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 2, applymsg seq 7,clientid 3,opname Get,key 0
+2019/10/05 21:28:26 1 start command name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:26 kvserve 1, applymsg seq 8,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 1, applymsg seq 3,clientid 4,opname Get,key 2
+2019/10/05 21:28:26 4003 kv 1 startcommand receive name Get,key 2,value ,clientId 4,seq 3.
+2019/10/05 21:28:26 client 4 server 1 Get 2 found value  database map[0:x 0 0 yx 0 1 yx 0 2 yx 0 3 y 1:x 1 0 yx 1 1 yx 1 2 y 2: 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:26 1 start command name Append,key 2,value x 2 0 y,clientId 4,seq 4.
+2019/10/05 21:28:26 kvserve 0, applymsg seq 8,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 0, applymsg seq 3,clientid 4,opname Get,key 2
+2019/10/05 21:28:26 kvserve 4, applymsg seq 8,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 4, applymsg seq 3,clientid 4,opname Get,key 2
+2019/10/05 21:28:26 kvserve 2, applymsg seq 8,clientid 3,opname Append,key 0
+2019/10/05 21:28:26 kvserve 2, applymsg seq 3,clientid 4,opname Get,key 2
+2019/10/05 21:28:26 3008 kv 4 startcommand receive name Append,key 0,value x 0 3 y,clientId 3,seq 8.
+2019/10/05 21:28:26 kvserve 1, applymsg seq 4,clientid 4,opname Append,key 2
+2019/10/05 21:28:26 4004 kv 1 startcommand receive name Append,key 2,value x 2 0 y,clientId 4,seq 4.
+2019/10/05 21:28:26 2 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:26 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:26 kvserve 2, applymsg seq 4,clientid 4,opname Append,key 2
+2019/10/05 21:28:26 kvserve 4, applymsg seq 4,clientid 4,opname Append,key 2
+2019/10/05 21:28:26 4 start command name Append,key 0,value x 0 4 y,clientId 3,seq 9.
+2019/10/05 21:28:26 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:26 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:26 kvserve 0, applymsg seq 4,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 0 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:27 3 start command name Append,key 2,value x 2 1 y,clientId 4,seq 5.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:27 1 start command name Append,key 0,value x 0 4 y,clientId 3,seq 9.
+2019/10/05 21:28:27 kvserve 1, applymsg seq 9,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 3009 kv 1 startcommand receive name Append,key 0,value x 0 4 y,clientId 3,seq 9.
+2019/10/05 21:28:27 kvserve 2, applymsg seq 9,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 kvserve 0, applymsg seq 9,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 3 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:27 kvserve 4, applymsg seq 9,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 0 start command name Append,key 2,value x 2 1 y,clientId 4,seq 5.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:27 time out when execute opname Append, clientid 5, seq 7,key 3
+2019/10/05 21:28:27 timeout when call putAppend to 3 .
+2019/10/05 21:28:27 4 start command name Append,key 3,value x 3 2 y,clientId 5,seq 7.
+2019/10/05 21:28:27 clientid 5 have dup name Append key 3 value x 3 2 y seq 7
+2019/10/05 21:28:27 time out when execute opname Get, clientid 2, seq 6,key 1
+2019/10/05 21:28:27 4 start command name Get,key 3,value ,clientId 5,seq 8.
+2019/10/05 21:28:27 2 start command name Get,key 0,value ,clientId 3,seq 10.
+2019/10/05 21:28:27 4 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:27 2 start command name Append,key 2,value x 2 1 y,clientId 4,seq 5.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:27 0 start command name Get,key 1,value ,clientId 2,seq 6.
+2019/10/05 21:28:27 clientid 2 have dup name Get key 1 value  seq 6
+2019/10/05 21:28:27 3 start command name Get,key 0,value ,clientId 3,seq 10.
+2019/10/05 21:28:27 0 start command name Append,key 1,value x 1 3 y,clientId 2,seq 7.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:27 1 start command name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:27 kvserve 1, applymsg seq 11,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 1011 kv 1 startcommand receive name Append,key 4,value x 4 4 y,clientId 1,seq 11.
+2019/10/05 21:28:27 1 start command name Get,key 4,value ,clientId 1,seq 12.
+2019/10/05 21:28:27 4 start command name Append,key 2,value x 2 1 y,clientId 4,seq 5.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:27 kvserve 2, applymsg seq 11,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 kvserve 0, applymsg seq 11,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 kvserve 1, applymsg seq 12,clientid 1,opname Get,key 4
+2019/10/05 21:28:27 1012 kv 1 startcommand receive name Get,key 4,value ,clientId 1,seq 12.
+2019/10/05 21:28:27 client 1 server 1 Get 4 found value x 4 0 yx 4 1 yx 4 2 yx 4 3 yx 4 4 y database map[0:x 0 0 yx 0 1 yx 0 2 yx 0 3 yx 0 4 y 1:x 1 0 yx 1 1 yx 1 2 y 2:x 2 0 y 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 yx 4 4 y] 
+2019/10/05 21:28:27 kvserve 4, applymsg seq 11,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 1 start command name Append,key 4,value x 4 5 y,clientId 1,seq 13.
+2019/10/05 21:28:27 kvserve 3, applymsg seq 7,clientid 5,opname Append,key 3
+2019/10/05 21:28:27 kvserve 3, applymsg seq 6,clientid 2,opname Get,key 1
+2019/10/05 21:28:27 kvserve 3, applymsg seq 1,clientid 4,opname Put,key 2
+2019/10/05 21:28:27 put value  database map[1:x 1 0 yx 1 1 yx 1 2 y 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:27 kvserve 3, applymsg seq 2,clientid 4,opname Get,key 2
+2019/10/05 21:28:27 kvserve 3, applymsg seq 1,clientid 3,opname Put,key 0
+2019/10/05 21:28:27 put value  database map[1:x 1 0 yx 1 1 yx 1 2 y 2: 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 y] 
+2019/10/05 21:28:27 kvserve 3, applymsg seq 2,clientid 3,opname Get,key 0
+2019/10/05 21:28:27 kvserve 3, applymsg seq 3,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 kvserve 3, applymsg seq 4,clientid 3,opname Get,key 0
+2019/10/05 21:28:27 kvserve 3, applymsg seq 5,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 kvserve 3, applymsg seq 6,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 kvserve 3, applymsg seq 7,clientid 3,opname Get,key 0
+2019/10/05 21:28:27 kvserve 3, applymsg seq 8,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 kvserve 3, applymsg seq 3,clientid 4,opname Get,key 2
+2019/10/05 21:28:27 kvserve 3, applymsg seq 4,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 3, applymsg seq 9,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 kvserve 3, applymsg seq 11,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 kvserve 3, applymsg seq 12,clientid 1,opname Get,key 4
+2019/10/05 21:28:27 0 start command name Get,key 3,value ,clientId 5,seq 8.
+2019/10/05 21:28:27 0 start command name Get,key 0,value ,clientId 3,seq 10.
+2019/10/05 21:28:27 kvserve 4, applymsg seq 12,clientid 1,opname Get,key 4
+2019/10/05 21:28:27 kvserve 1, applymsg seq 13,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 1013 kv 1 startcommand receive name Append,key 4,value x 4 5 y,clientId 1,seq 13.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:27 1 start command name Append,key 4,value x 4 6 y,clientId 1,seq 14.
+2019/10/05 21:28:27 kvserve 3, applymsg seq 13,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 kvserve 4, applymsg seq 13,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 kvserve 1, applymsg seq 14,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 1014 kv 1 startcommand receive name Append,key 4,value x 4 6 y,clientId 1,seq 14.
+2019/10/05 21:28:27 1 start command name Append,key 2,value x 2 1 y,clientId 4,seq 5.
+2019/10/05 21:28:27 kvserve 3, applymsg seq 14,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 kvserve 4, applymsg seq 14,clientid 1,opname Append,key 4
+2019/10/05 21:28:27 kvserve 1, applymsg seq 5,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 4005 kv 1 startcommand receive name Append,key 2,value x 2 1 y,clientId 4,seq 5.
+2019/10/05 21:28:27 4 start command name Get,key 0,value ,clientId 3,seq 10.
+2019/10/05 21:28:27 1 start command name Append,key 2,value x 2 2 y,clientId 4,seq 6.
+2019/10/05 21:28:27 1 start command name Get,key 3,value ,clientId 5,seq 8.
+2019/10/05 21:28:27 4 start command name Append,key 1,value x 1 3 y,clientId 2,seq 7.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:27 kvserve 4, applymsg seq 5,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 3, applymsg seq 5,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 1, applymsg seq 6,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 1, applymsg seq 8,clientid 5,opname Get,key 3
+2019/10/05 21:28:27 5008 kv 1 startcommand receive name Get,key 3,value ,clientId 5,seq 8.
+2019/10/05 21:28:27 4006 kv 1 startcommand receive name Append,key 2,value x 2 2 y,clientId 4,seq 6.
+2019/10/05 21:28:27 client 5 server 1 Get 3 found value x 3 0 yx 3 1 yx 3 2 y database map[0:x 0 0 yx 0 1 yx 0 2 yx 0 3 yx 0 4 y 1:x 1 0 yx 1 1 yx 1 2 y 2:x 2 0 yx 2 1 yx 2 2 y 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 yx 4 4 yx 4 5 yx 4 6 y] 
+2019/10/05 21:28:27 kvserve 3, applymsg seq 6,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 3, applymsg seq 8,clientid 5,opname Get,key 3
+2019/10/05 21:28:27 1 start command name Append,key 2,value x 2 3 y,clientId 4,seq 7.
+2019/10/05 21:28:27 1 start command name Get,key 3,value ,clientId 5,seq 9.
+2019/10/05 21:28:27 kvserve 4, applymsg seq 6,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 4, applymsg seq 8,clientid 5,opname Get,key 3
+2019/10/05 21:28:27 kvserve 1, applymsg seq 7,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 1, applymsg seq 9,clientid 5,opname Get,key 3
+2019/10/05 21:28:27 5009 kv 1 startcommand receive name Get,key 3,value ,clientId 5,seq 9.
+2019/10/05 21:28:27 client 5 server 1 Get 3 found value x 3 0 yx 3 1 yx 3 2 y database map[0:x 0 0 yx 0 1 yx 0 2 yx 0 3 yx 0 4 y 1:x 1 0 yx 1 1 yx 1 2 y 2:x 2 0 yx 2 1 yx 2 2 yx 2 3 y 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 yx 4 4 yx 4 5 yx 4 6 y] 
+2019/10/05 21:28:27 4007 kv 1 startcommand receive name Append,key 2,value x 2 3 y,clientId 4,seq 7.
+2019/10/05 21:28:27 1 start command name Get,key 3,value ,clientId 5,seq 10.
+2019/10/05 21:28:27 2 start command name Get,key 4,value ,clientId 1,seq 15.
+2019/10/05 21:28:27 kvserve 3, applymsg seq 7,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 3, applymsg seq 9,clientid 5,opname Get,key 3
+2019/10/05 21:28:27 1 start command name Append,key 2,value x 2 4 y,clientId 4,seq 8.
+2019/10/05 21:28:27 kvserve 4, applymsg seq 7,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 4, applymsg seq 9,clientid 5,opname Get,key 3
+2019/10/05 21:28:27 kvserve 1, applymsg seq 10,clientid 5,opname Get,key 3
+2019/10/05 21:28:27 5010 kv 1 startcommand receive name Get,key 3,value ,clientId 5,seq 10.
+2019/10/05 21:28:27 client 5 server 1 Get 3 found value x 3 0 yx 3 1 yx 3 2 y database map[0:x 0 0 yx 0 1 yx 0 2 yx 0 3 yx 0 4 y 1:x 1 0 yx 1 1 yx 1 2 y 2:x 2 0 yx 2 1 yx 2 2 yx 2 3 y 3:x 3 0 yx 3 1 yx 3 2 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 yx 4 4 yx 4 5 yx 4 6 y] 
+2019/10/05 21:28:27 1 start command name Append,key 3,value x 3 3 y,clientId 5,seq 11.
+2019/10/05 21:28:27 1 start command name Get,key 0,value ,clientId 3,seq 10.
+2019/10/05 21:28:27 kvserve 3, applymsg seq 10,clientid 5,opname Get,key 3
+2019/10/05 21:28:27 kvserve 1, applymsg seq 8,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 4008 kv 1 startcommand receive name Append,key 2,value x 2 4 y,clientId 4,seq 8.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:27 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:27 kvserve 4, applymsg seq 10,clientid 5,opname Get,key 3
+2019/10/05 21:28:27 kvserve 1, applymsg seq 11,clientid 5,opname Append,key 3
+2019/10/05 21:28:27 5011 kv 1 startcommand receive name Append,key 3,value x 3 3 y,clientId 5,seq 11.
+2019/10/05 21:28:27 1 start command name Append,key 3,value x 3 4 y,clientId 5,seq 12.
+2019/10/05 21:28:27 kvserve 3, applymsg seq 8,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 3, applymsg seq 11,clientid 5,opname Append,key 3
+2019/10/05 21:28:27 0 start command name Get,key 4,value ,clientId 1,seq 15.
+2019/10/05 21:28:27 kvserve 4, applymsg seq 8,clientid 4,opname Append,key 2
+2019/10/05 21:28:27 kvserve 4, applymsg seq 11,clientid 5,opname Append,key 3
+2019/10/05 21:28:27 kvserve 1, applymsg seq 10,clientid 3,opname Get,key 0
+2019/10/05 21:28:27 3010 kv 1 startcommand receive name Get,key 0,value ,clientId 3,seq 10.
+2019/10/05 21:28:27 client 3 server 1 Get 0 found value x 0 0 yx 0 1 yx 0 2 yx 0 3 yx 0 4 y database map[0:x 0 0 yx 0 1 yx 0 2 yx 0 3 yx 0 4 y 1:x 1 0 yx 1 1 yx 1 2 y 2:x 2 0 yx 2 1 yx 2 2 yx 2 3 yx 2 4 y 3:x 3 0 yx 3 1 yx 3 2 yx 3 3 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 yx 4 4 yx 4 5 yx 4 6 y] 
+2019/10/05 21:28:27 1 start command name Append,key 0,value x 0 5 y,clientId 3,seq 11.
+2019/10/05 21:28:27 kvserve 3, applymsg seq 10,clientid 3,opname Get,key 0
+2019/10/05 21:28:27 kvserve 4, applymsg seq 10,clientid 3,opname Get,key 0
+2019/10/05 21:28:27 kvserve 1, applymsg seq 12,clientid 5,opname Append,key 3
+2019/10/05 21:28:27 5012 kv 1 startcommand receive name Append,key 3,value x 3 4 y,clientId 5,seq 12.
+2019/10/05 21:28:27 1 start command name Append,key 3,value x 3 5 y,clientId 5,seq 13.
+2019/10/05 21:28:27 kvserve 4, applymsg seq 12,clientid 5,opname Append,key 3
+2019/10/05 21:28:27 kvserve 3, applymsg seq 12,clientid 5,opname Append,key 3
+2019/10/05 21:28:27 3 start command name Append,key 2,value x 2 5 y,clientId 4,seq 9.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:27 kvserve 1, applymsg seq 11,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 kvserve 1, applymsg seq 13,clientid 5,opname Append,key 3
+2019/10/05 21:28:27 5013 kv 1 startcommand receive name Append,key 3,value x 3 5 y,clientId 5,seq 13.
+2019/10/05 21:28:27 3011 kv 1 startcommand receive name Append,key 0,value x 0 5 y,clientId 3,seq 11.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 1 .
+2019/10/05 21:28:27 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:27 3 start command name Append,key 1,value x 1 3 y,clientId 2,seq 7.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:27 3 start command name Get,key 4,value ,clientId 1,seq 15.
+2019/10/05 21:28:27 kvserve 3, applymsg seq 11,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 kvserve 3, applymsg seq 13,clientid 5,opname Append,key 3
+2019/10/05 21:28:27 kvserve 4, applymsg seq 11,clientid 3,opname Append,key 0
+2019/10/05 21:28:27 kvserve 4, applymsg seq 13,clientid 5,opname Append,key 3
+2019/10/05 21:28:27 3 start command name Append,key 3,value x 3 5 y,clientId 5,seq 13.
+2019/10/05 21:28:27 clientid 5 have dup name Append key 3 value x 3 5 y seq 13
+2019/10/05 21:28:27 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:27 2 start command name Append,key 0,value x 0 5 y,clientId 3,seq 11.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:27 0 start command name Append,key 1,value x 1 3 y,clientId 2,seq 7.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:27 3 start command name Append,key 3,value x 3 6 y,clientId 5,seq 14.
+2019/10/05 21:28:27 rpc timeout when call putAppend to 2 .
+2019/10/05 21:28:27 4 start command name Get,key 4,value ,clientId 1,seq 15.
+2019/10/05 21:28:28 2 start command name Append,key 2,value x 2 5 y,clientId 4,seq 9.
+2019/10/05 21:28:28 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:28 1 start command name Append,key 1,value x 1 3 y,clientId 2,seq 7.
+2019/10/05 21:28:28 3 start command name Append,key 0,value x 0 5 y,clientId 3,seq 11.
+2019/10/05 21:28:28 clientid 3 have dup name Append key 0 value x 0 5 y seq 11
+2019/10/05 21:28:28 1 start command name Get,key 4,value ,clientId 1,seq 15.
+2019/10/05 21:28:28 4 start command name Append,key 3,value x 3 6 y,clientId 5,seq 14.
+2019/10/05 21:28:28 rpc timeout when call putAppend to 3 .
+2019/10/05 21:28:28 kvserve 1, applymsg seq 7,clientid 2,opname Append,key 1
+2019/10/05 21:28:28 2007 kv 1 startcommand receive name Append,key 1,value x 1 3 y,clientId 2,seq 7.
+2019/10/05 21:28:28 4 start command name Append,key 2,value x 2 5 y,clientId 4,seq 9.
+2019/10/05 21:28:28 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:28 kvserve 3, applymsg seq 7,clientid 2,opname Append,key 1
+2019/10/05 21:28:28 kvserve 4, applymsg seq 7,clientid 2,opname Append,key 1
+2019/10/05 21:28:28 kvserve 1, applymsg seq 15,clientid 1,opname Get,key 4
+2019/10/05 21:28:28 1015 kv 1 startcommand receive name Get,key 4,value ,clientId 1,seq 15.
+2019/10/05 21:28:28 client 1 server 1 Get 4 found value x 4 0 yx 4 1 yx 4 2 yx 4 3 yx 4 4 yx 4 5 yx 4 6 y database map[0:x 0 0 yx 0 1 yx 0 2 yx 0 3 yx 0 4 yx 0 5 y 1:x 1 0 yx 1 1 yx 1 2 yx 1 3 y 2:x 2 0 yx 2 1 yx 2 2 yx 2 3 yx 2 4 y 3:x 3 0 yx 3 1 yx 3 2 yx 3 3 yx 3 4 yx 3 5 y 4:x 4 0 yx 4 1 yx 4 2 yx 4 3 yx 4 4 yx 4 5 yx 4 6 y] 
+2019/10/05 21:28:28 2 start command name Append,key 3,value x 3 6 y,clientId 5,seq 14.
+2019/10/05 21:28:28 rpc timeout when call putAppend to 4 .
+2019/10/05 21:28:28 kvserve 3, applymsg seq 15,clientid 1,opname Get,key 4
+2019/10/05 21:28:28 1 start command name Append,key 2,value x 2 5 y,clientId 4,seq 9.
+2019/10/05 21:28:28 kvserve 4, applymsg seq 15,clientid 1,opname Get,key 4
+2019/10/05 21:28:28 kvserve 1, applymsg seq 9,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 4009 kv 1 startcommand receive name Append,key 2,value x 2 5 y,clientId 4,seq 9.
+2019/10/05 21:28:28 0 start command name Append,key 3,value x 3 6 y,clientId 5,seq 14.
+2019/10/05 21:28:28 rpc timeout when call putAppend to 0 .
+2019/10/05 21:28:28 kvserve 4, applymsg seq 9,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 3, applymsg seq 9,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 1 start command name Append,key 3,value x 3 6 y,clientId 5,seq 14.
+2019/10/05 21:28:28 kvserve 1, applymsg seq 14,clientid 5,opname Append,key 3
+2019/10/05 21:28:28 5014 kv 1 startcommand receive name Append,key 3,value x 3 6 y,clientId 5,seq 14.
+2019/10/05 21:28:28 kvserve 4, applymsg seq 14,clientid 5,opname Append,key 3
+2019/10/05 21:28:28 kvserve 2, applymsg seq 12,clientid 1,opname Get,key 4
+2019/10/05 21:28:28 kvserve 2, applymsg seq 13,clientid 1,opname Append,key 4
+2019/10/05 21:28:28 kvserve 2, applymsg seq 14,clientid 1,opname Append,key 4
+2019/10/05 21:28:28 kvserve 2, applymsg seq 5,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 2, applymsg seq 6,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 2, applymsg seq 8,clientid 5,opname Get,key 3
+2019/10/05 21:28:28 kvserve 2, applymsg seq 7,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 2, applymsg seq 9,clientid 5,opname Get,key 3
+2019/10/05 21:28:28 kvserve 2, applymsg seq 10,clientid 5,opname Get,key 3
+2019/10/05 21:28:28 kvserve 2, applymsg seq 8,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 2, applymsg seq 11,clientid 5,opname Append,key 3
+2019/10/05 21:28:28 kvserve 2, applymsg seq 10,clientid 3,opname Get,key 0
+2019/10/05 21:28:28 kvserve 2, applymsg seq 12,clientid 5,opname Append,key 3
+2019/10/05 21:28:28 kvserve 2, applymsg seq 11,clientid 3,opname Append,key 0
+2019/10/05 21:28:28 kvserve 2, applymsg seq 13,clientid 5,opname Append,key 3
+2019/10/05 21:28:28 kvserve 2, applymsg seq 7,clientid 2,opname Append,key 1
+2019/10/05 21:28:28 kvserve 2, applymsg seq 15,clientid 1,opname Get,key 4
+2019/10/05 21:28:28 kvserve 2, applymsg seq 9,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 2, applymsg seq 14,clientid 5,opname Append,key 3
+2019/10/05 21:28:28 kvserve 0, applymsg seq 12,clientid 1,opname Get,key 4
+2019/10/05 21:28:28 kvserve 0, applymsg seq 13,clientid 1,opname Append,key 4
+2019/10/05 21:28:28 kvserve 0, applymsg seq 14,clientid 1,opname Append,key 4
+2019/10/05 21:28:28 kvserve 0, applymsg seq 5,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 0, applymsg seq 6,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 0, applymsg seq 8,clientid 5,opname Get,key 3
+2019/10/05 21:28:28 kvserve 0, applymsg seq 7,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 0, applymsg seq 9,clientid 5,opname Get,key 3
+2019/10/05 21:28:28 kvserve 0, applymsg seq 10,clientid 5,opname Get,key 3
+2019/10/05 21:28:28 kvserve 0, applymsg seq 8,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 0, applymsg seq 11,clientid 5,opname Append,key 3
+2019/10/05 21:28:28 kvserve 0, applymsg seq 10,clientid 3,opname Get,key 0
+2019/10/05 21:28:28 kvserve 3, applymsg seq 14,clientid 5,opname Append,key 3
+2019/10/05 21:28:28 kvserve 0, applymsg seq 12,clientid 5,opname Append,key 3
+2019/10/05 21:28:28 kvserve 0, applymsg seq 11,clientid 3,opname Append,key 0
+2019/10/05 21:28:28 kvserve 0, applymsg seq 13,clientid 5,opname Append,key 3
+2019/10/05 21:28:28 kvserve 0, applymsg seq 7,clientid 2,opname Append,key 1
+2019/10/05 21:28:28 kvserve 0, applymsg seq 15,clientid 1,opname Get,key 4
+2019/10/05 21:28:28 kvserve 0, applymsg seq 9,clientid 4,opname Append,key 2
+2019/10/05 21:28:28 kvserve 0, applymsg seq 14,clientid 5,opname Append,key 3
+2019/10/05 21:28:30 StartKVServer.......
+2019/10/05 21:28:30 add service rfsvc..........................................
+2019/10/05 21:28:30 StartKVServer.......
+2019/10/05 21:28:30 add service rfsvc..........................................
+2019/10/05 21:28:30 StartKVServer.......
+2019/10/05 21:28:30 add service rfsvc..........................................
+2019/10/05 21:28:30 StartKVServer.......
+2019/10/05 21:28:30 add service rfsvc..........................................
+2019/10/05 21:28:30 StartKVServer.......
+2019/10/05 21:28:30 add service rfsvc..........................................
+2019/10/05 21:28:30 1 start command name Get,key 0,value ,clientId 0,seq 1.
+2019/10/05 21:28:30 0 start command name Get,key 0,value ,clientId 0,seq 1.
+2019/10/05 21:28:30 3 start command name Get,key 0,value ,clientId 0,seq 1.
+2019/10/05 21:28:30 kvserve 3, applymsg seq 1,clientid 0,opname Get,key 0
+2019/10/05 21:28:30 1 kv 3 startcommand receive name Get,key 0,value ,clientId 0,seq 1.
+2019/10/05 21:28:30 Get 0 not found 
+--- FAIL: TestPersistPartitionUnreliable3A (8.89s)
+    test_test.go:85: 0 missing element x 0 0 y in Append result 
+FAIL
+exit status 1
+FAIL	kvraft	8.901s

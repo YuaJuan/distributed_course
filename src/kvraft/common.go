@@ -21,23 +21,23 @@ type PutAppendArgs struct {
 	// Field names must start with capital letters,
 	// otherwise RPC will break.
 	ClientID int
-	Seq      int
+	Seq      int32
 }
 
 type PutAppendReply struct {
 	WrongLeader bool
-	Err         Err
+	ErrInfo     Err
 }
 
 type GetArgs struct {
 	Key string
 	// You'll have to add definitions here.
 	ClientID int
-	Seq      int
+	Seq      int32
 }
 
 type GetReply struct {
 	WrongLeader bool
-	Err         Err
+	ErrInfo     Err
 	Value       string
 }

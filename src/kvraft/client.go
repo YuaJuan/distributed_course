@@ -4,13 +4,14 @@ import (
 	"crypto/rand"
 	"labrpc"
 	"math/big"
+	"sync/atomic"
 	"time"
 )
 
 type Clerk struct {
 	servers []*labrpc.ClientEnd
 	// You will have to modify this struct.
-	clientSeq      int
+	clientSeq      int32
 	me             int
 	considerLeader int
 }
@@ -49,23 +50,25 @@ func MakeClerk(servers []*labrpc.ClientEnd) *Clerk {
 // arguments. and reply must be passed as a pointer.
 //
 func (ck *Clerk) Get(key string) string {
-	args := GetArgs{
-		Key:      key,
-		ClientID: ck.me,
-		Seq:      ck.clientSeq,
-	}
-	ck.clientSeq += 1
-	var reply GetReply
+	atomic.AddInt32(&ck.clientSeq, 1)
+
 	//serverNum := len(ck.servers)
 	// You will have to modify this function.
 	//这里用go要怎么写呢，怎么知道再go里结果已经争取返回了？
 	//如何知识rpc失败，应该要重新发RPC.怎么try-again
 	i := ck.considerLeader
 	for {
+		args := GetArgs{
+			Key:      key,
+			ClientID: ck.me,
+			Seq:      atomic.LoadInt32(&ck.clientSeq),
+		}
+
+		var reply GetReply
 		if ok := ck.servers[i].Call("KVServer.Get", &args, &reply); ok && reply.WrongLeader {
 			ck.considerLeader = i
 			//如果是超时，那么继续向该Leader发送请求
-			if reply.Err == TimeOut {
+			if reply.ErrInfo == TimeOut {
 				continue
 			}
 			return reply.Value
@@ -90,30 +93,32 @@ func (ck *Clerk) Get(key string) string {
 //
 func (ck *Clerk) PutAppend(key string, value string, op string) {
 	// You will have to modify this function.
-	args := PutAppendArgs{
-		Key:      key,
-		Value:    value,
-		Op:       op,
-		ClientID: ck.me,
-		Seq:      ck.clientSeq,
-	}
-	ck.clientSeq += 1
-	//serverNum := len(ck.servers)
-	var reply PutAppendReply
+
+	atomic.AddInt32(&ck.clientSeq, 1)
 	i := ck.considerLeader
 	for {
+		var reply PutAppendReply
+		args := PutAppendArgs{
+			Key:      key,
+			Value:    value,
+			Op:       op,
+			ClientID: ck.me,
+			Seq:      atomic.LoadInt32(&ck.clientSeq),
+		}
 		if ok := ck.servers[i].Call("KVServer.PutAppend", &args, &reply); ok && reply.WrongLeader {
 			ck.considerLeader = i
+			i = (i + 1) % len(ck.servers)
 			//如果是超时，那么继续向该Leader发送请求
-			if reply.Err == TimeOut {
+			if reply.ErrInfo == TimeOut {
+				DPrintf("timeout when call putAppend to %v .", i)
 				continue
 			}
 			return
 		}
+		DPrintf("rpc timeout when call putAppend to %v .", i)
 		time.Sleep(time.Millisecond * 100)
 		//如果不是leader或者rpc失败，则切换server
 		i = (i + 1) % len(ck.servers)
-
 	}
 }
 
