@@ -26,13 +26,11 @@ func nrand() int64 {
 var ClerkID = 0
 
 func MakeClerk(servers []*labrpc.ClientEnd) *Clerk {
-
 	ck := new(Clerk)
 	ck.servers = servers
 	ck.clientSeq = 0
 	ck.me = ClerkID
 	ClerkID++
-	DPrintf("MakeClerk %v", ClerkID)
 	// You'll have to add code here.
 	return ck
 }

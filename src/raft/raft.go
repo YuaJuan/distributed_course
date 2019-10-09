@@ -279,6 +279,7 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 			Term:    rf.currentTerm,
 		}
 		rf.entries = append(rf.entries, entry)
+		DPrintf("Leader %v entries %v", rf.me, rf.entries)
 		index = len(rf.entries) - 1
 		rf.persist()
 		rf.mu.Unlock()
