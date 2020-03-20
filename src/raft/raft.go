@@ -116,8 +116,10 @@ func (rf *Raft) GetState() (int, bool) {
 	var term int
 	var isleader bool
 	// Your code here (2A).
+	rf.mu.Lock()
 	term = rf.currentTerm
 	isleader = rf.state == Leader
+	rf.mu.Unlock()
 	return term, isleader
 }
 
@@ -128,19 +130,7 @@ func (rf *Raft) encodeRaftState() []byte {
 	e.Encode(rf.voteFor)
 	e.Encode(rf.entries)
 	//e.Encode(rf.commitId)
-
 	return w.Bytes()
-}
-
-func (rf *Raft) SaveSnapshot(database map[string]string) {
-	w := new(bytes.Buffer)
-	e := labgob.NewEncoder(w)
-	e.Encode(rf.currentTerm)
-	e.Encode(rf.voteFor)
-	e.Encode(rf.entries)
-	e.Encode(rf.commitId)
-	e.Encode(database)
-	rf.persister.SaveRaftState(w.Bytes())
 }
 
 //
@@ -267,28 +257,27 @@ func (rf *Raft) Start(command interface{}) (int, int, bool) {
 	index := -1
 
 	rf.mu.Lock()
+
 	isLeader := rf.state == Leader
-	if !isLeader {
-		rf.mu.Unlock()
-		return index, rf.currentTerm, isLeader
-	}
+	rf.mu.Unlock()
 	if isLeader {
 		DPrintf("start command %v", command)
 		entry := LogEntries{
 			Command: command,
 			Term:    rf.currentTerm,
 		}
+		rf.mu.Lock()
 		rf.entries = append(rf.entries, entry)
 		DPrintf("Leader %v entries %v", rf.me, rf.entries)
 		index = len(rf.entries) - 1
-		rf.persist()
 		rf.mu.Unlock()
+		rf.persist()
 		rf.broadcastHeartbeat()
+
 		return index, rf.currentTerm, isLeader
 	}
-
 	// Your code here (2B).
-	rf.mu.Unlock()
+
 	return index, rf.currentTerm, isLeader
 }
 
@@ -334,6 +323,8 @@ func (rf *Raft) commitEntries() {
 // leader的entries比follower更短，那么follower应该舍弃自己后面的entries
 
 func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply) {
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
 	defer rf.persist()
 	reply.Term = rf.currentTerm
 	reply.Success = false
@@ -342,8 +333,6 @@ func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply)
 		return
 	}
 	DPrintf("peer %v,before entries:%v", rf.me, rf.entries)
-	rf.mu.Lock()
-	defer rf.mu.Unlock()
 
 	//注意：在任何时候发现比自己term更大的信息，都应该重新设置自己的term
 	if rf.currentTerm < args.LeaderTerm {
@@ -356,43 +345,12 @@ func (rf *Raft) AppendEntries(args *AppendEntriesReq, reply *AppendEntriesReply)
 
 	rf.electionTimer.Reset(randTimeDuration())
 
-	// if len(rf.entries) == 0 {
-	// 	rf.entries = append(rf.entries, args.Entries...)
-	// 	reply.MatchIndex = len(rf.entries) - 1
-	// 	reply.Success = true
-	// 	//DPrintf("afert insert peer %v entries %v", rf.me, rf.entries)
-	// }
 	if args.PrevLogIndex >= len(rf.entries) || (args.PrevLogIndex >= 0 &&
 		args.PrevLogTerm != rf.entries[args.PrevLogIndex].Term) {
 		//当前term不匹配，一般来说所有term的index都不匹配。返回冲突entry以及存放该term的第一个index
-		//count := args.PrevLogIndex - 1
-		// if rf.entries[count].Term ！= rf.entries[args.PrevLogIndex].Term {
-		// 	break
-		// }
 		DPrintf("peer %v term not match", rf.me)
 		return
 	}
-
-	/*
-		var i int
-		for i = 0; i < len(args.Entries); i++ {
-			index += 1
-			if index >= len(rf.entries) {
-				break
-			}
-			if args.Entries[i].Term != rf.entries[index].Term {
-				rf.entries = rf.entries[:index]
-
-				//最开始这里没有考虑到i之前的是匹配的，不应该把整个参数都append过去
-				rf.entries = append(rf.entries, args.Entries[i:]...)
-				break
-			}
-		}
-		//DPrintf("peer %v conflict index %v", rf.me, index)
-		if index == len(rf.entries) && i >= 0 {
-			rf.entries = append(rf.entries, args.Entries[i:]...)
-		}
-	*/
 
 	rf.entries = rf.entries[:args.PrevLogIndex+1]
 	rf.entries = append(rf.entries, args.Entries...)
@@ -451,9 +409,11 @@ func (rf *Raft) getLastIndex() int {
 
 func (rf *Raft) startElection() {
 	defer rf.persist()
-	rf.electionTimer.Reset(randTimeDuration())
-
 	var myvotes int32 = 0
+
+	rf.mu.Lock()
+	//rf.electionTimer.Reset(randTimeDuration())
+
 	rf.currentTerm += 1
 	InfoPrintf("peer %v start election at term %v", rf.me, rf.currentTerm)
 	args := &RequestVoteArgs{
@@ -462,6 +422,7 @@ func (rf *Raft) startElection() {
 		LastLogIndex:  rf.getLastIndex(),
 		LastLogTerm:   rf.getLastTerm(),
 	}
+	rf.mu.Unlock()
 	for i, _ := range rf.peers {
 		if i == rf.me {
 			rf.voteFor = i
@@ -473,19 +434,23 @@ func (rf *Raft) startElection() {
 				VoteGranted: false,
 			}
 			if rf.sendRequestVote(server, args, reply) {
+				DPrintf("test======")
 				rf.mu.Lock()
 				DPrintf("peer %v,receive votereply from %v, reply term:%v,reply voteGranted:%v", rf.me, server, reply.CurrentTerm, reply.VoteGranted)
 
 				if reply.CurrentTerm > rf.currentTerm {
 					rf.currentTerm = reply.CurrentTerm
+					rf.mu.Unlock()
 					rf.convertState(Follower)
+
 				} else if reply.VoteGranted == true && rf.state == Candidate {
 					atomic.AddInt32(&myvotes, 1)
+					rf.mu.Unlock()
 					if atomic.LoadInt32(&myvotes) > int32(len(rf.peers)/2) {
 						rf.convertState(Leader)
 					}
 				}
-				rf.mu.Unlock()
+
 			} else {
 				DPrintf("sendRequestVote failed to peer %v", server)
 			}
@@ -562,9 +527,11 @@ func (rf *Raft) broadcastHeartbeat() {
 						rf.convertState(Follower)
 					} else {
 						//TODO: more efficient
+						rf.mu.Lock()
 						if rf.nextIndex[server] >= 1 {
 							rf.nextIndex[server] -= 1
 						}
+						rf.mu.Unlock()
 					}
 				}
 			}
@@ -575,24 +542,32 @@ func (rf *Raft) broadcastHeartbeat() {
 }
 
 func (rf *Raft) convertState(s NodeState) {
+
 	if s == rf.state {
 		return
 	}
+	rf.mu.Lock()
 	rf.state = s
 	DPrintf("peer %v convert state to %v at term %v ", rf.me, s, rf.currentTerm)
+	rf.mu.Unlock()
 	switch s {
 	case Follower:
+		rf.mu.Lock()
 		rf.heartbeatTimer.Stop()
 		rf.electionTimer.Reset(randTimeDuration())
 		rf.voteFor = -1
+		rf.mu.Unlock()
 	case Candidate:
+		rf.mu.Lock()
 		rf.electionTimer.Reset(randTimeDuration())
+		rf.mu.Unlock()
 		rf.startElection()
-
 	case Leader:
+		rf.mu.Lock()
 		rf.electionTimer.Stop()
-		rf.broadcastHeartbeat()
 		rf.heartbeatTimer.Reset(HeartbeatInterval)
+		rf.mu.Unlock()
+		rf.broadcastHeartbeat()
 	}
 	return
 }
@@ -640,27 +615,28 @@ func Make(peers []*labrpc.ClientEnd, me int,
 			case <-rf.electionTimer.C:
 				rf.mu.Lock()
 				rf.electionTimer.Reset(randTimeDuration())
-				if rf.state == Follower {
+				state := rf.state
+				rf.mu.Unlock()
+				if state == Follower {
 					rf.convertState(Candidate)
 				} else {
 					rf.startElection()
 				}
-				rf.mu.Unlock()
 
 			case <-rf.heartbeatTimer.C:
 				rf.mu.Lock()
-				if rf.state == Leader {
-					rf.broadcastHeartbeat()
-					rf.heartbeatTimer.Reset(HeartbeatInterval)
-				}
+				state := rf.state
 				rf.mu.Unlock()
+				if state == Leader {
+					rf.broadcastHeartbeat()
+					rf.mu.Lock()
+					rf.heartbeatTimer.Reset(HeartbeatInterval)
+					rf.mu.Unlock()
+				}
+
 			}
 		}
 	}()
-
-	// Your initialization code here (2A, 2B, 2C).
-
-	// initialize from state persisted before a crash
 	rf.readPersist(persister.ReadRaftState())
 
 	return rf

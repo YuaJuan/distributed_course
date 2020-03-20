@@ -75,7 +75,6 @@ func (ck *Clerk) Join(servers map[int][]string) {
 			var reply JoinReply
 			ok := srv.Call("ShardMaster.Join", args, &reply)
 			if ok && reply.WrongLeader == true {
-				DPrintf("Join ok")
 				return
 			}
 		}

@@ -1,21 +1,23 @@
 package shardkv
 
-import "shardmaster"
-import "labrpc"
-import "testing"
-import "os"
+import (
+	"labrpc"
+	"os"
+	"shardmaster"
+	"testing"
 
-// import "log"
-import crand "crypto/rand"
-import "math/big"
-import "math/rand"
-import "encoding/base64"
-import "sync"
-import "runtime"
-import "raft"
-import "strconv"
-import "fmt"
-import "time"
+	// import "log"
+	crand "crypto/rand"
+	"encoding/base64"
+	"fmt"
+	"math/big"
+	"math/rand"
+	"raft"
+	"runtime"
+	"strconv"
+	"sync"
+	"time"
+)
 
 func randstring(n int) string {
 	b := make([]byte, 2*n)
@@ -239,6 +241,7 @@ func (cfg *config) StartServer(gi int, i int) {
 		gg.saved[i] = raft.MakePersister()
 	}
 	cfg.mu.Unlock()
+	DPrintf("end %v ", ends)
 
 	gg.servers[i] = StartServer(ends, i, gg.saved[i], cfg.maxraftstate,
 		gg.gid, mends,
@@ -313,7 +316,9 @@ func (cfg *config) joinm(gis []int) {
 			servernames[i] = cfg.servername(gid, i)
 		}
 		m[gid] = servernames
+		DPrintf("gid %v server %v", gid, m[gid])
 	}
+
 	cfg.mck.Join(m)
 }
 

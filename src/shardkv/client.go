@@ -8,11 +8,14 @@ package shardkv
 // talks to the group that holds the key's shard.
 //
 
-import "labrpc"
-import "crypto/rand"
-import "math/big"
-import "shardmaster"
-import "time"
+import (
+	"crypto/rand"
+	"labrpc"
+	"math/big"
+	"shardmaster"
+	"sync/atomic"
+	"time"
+)
 
 //
 // which shard is a key in?
@@ -36,11 +39,15 @@ func nrand() int64 {
 }
 
 type Clerk struct {
-	sm       *shardmaster.Clerk
-	config   shardmaster.Config
-	make_end func(string) *labrpc.ClientEnd
+	sm        *shardmaster.Clerk
+	config    shardmaster.Config
+	make_end  func(string) *labrpc.ClientEnd
+	clientSeq int32
+	me        int
 	// You will have to modify this struct.
 }
+
+var ClerkId = 0
 
 //
 // the tester calls MakeClerk.
@@ -55,6 +62,8 @@ func MakeClerk(masters []*labrpc.ClientEnd, make_end func(string) *labrpc.Client
 	ck := new(Clerk)
 	ck.sm = shardmaster.MakeClerk(masters)
 	ck.make_end = make_end
+	ck.me = ClerkId
+	ClerkId++
 	// You'll have to add code here.
 	return ck
 }
@@ -68,6 +77,9 @@ func MakeClerk(masters []*labrpc.ClientEnd, make_end func(string) *labrpc.Client
 func (ck *Clerk) Get(key string) string {
 	args := GetArgs{}
 	args.Key = key
+	args.ClientID = ck.me
+	atomic.AddInt32(&ck.clientSeq, 1)
+	args.Seq = atomic.LoadInt32(&ck.clientSeq)
 
 	for {
 		shard := key2shard(key)
@@ -78,7 +90,7 @@ func (ck *Clerk) Get(key string) string {
 				srv := ck.make_end(servers[si])
 				var reply GetReply
 				ok := srv.Call("ShardKV.Get", &args, &reply)
-				if ok && reply.WrongLeader == false && (reply.Err == OK || reply.Err == ErrNoKey) {
+				if ok && reply.WrongLeader == true && (reply.Err == OK || reply.Err == ErrNoKey) {
 					return reply.Value
 				}
 				if ok && (reply.Err == ErrWrongGroup) {
@@ -103,7 +115,9 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 	args.Key = key
 	args.Value = value
 	args.Op = op
-
+	args.ClientID = ck.me
+	atomic.AddInt32(&ck.clientSeq, 1)
+	args.Seq = atomic.LoadInt32(&ck.clientSeq)
 
 	for {
 		shard := key2shard(key)
@@ -113,7 +127,7 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 				srv := ck.make_end(servers[si])
 				var reply PutAppendReply
 				ok := srv.Call("ShardKV.PutAppend", &args, &reply)
-				if ok && reply.WrongLeader == false && reply.Err == OK {
+				if ok && reply.WrongLeader == true && reply.Err == OK {
 					return
 				}
 				if ok && reply.Err == ErrWrongGroup {

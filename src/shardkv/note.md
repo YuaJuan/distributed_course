@@ -1,0 +1,1 @@
+1. when this assignment changes, replica groups have to hand off shards to each other, while ensuring that clients do not see inconsistent responses.

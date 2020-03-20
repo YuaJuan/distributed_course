@@ -15,6 +15,19 @@ const (
 	ErrWrongGroup = "ErrWrongGroup"
 )
 
+const (
+	NoKey   = Err("nokey")
+	TimeOut = Err("timeout")
+)
+
+const BASE = 1000
+
+const (
+	GetOp    = "Get"
+	PutOp    = "Put"
+	AppendOp = "Append"
+)
+
 type Err string
 
 // Put or Append
@@ -26,6 +39,8 @@ type PutAppendArgs struct {
 	// You'll have to add definitions here.
 	// Field names must start with capital letters,
 	// otherwise RPC will break.
+	ClientID int
+	Seq      int32
 }
 
 type PutAppendReply struct {
@@ -34,7 +49,10 @@ type PutAppendReply struct {
 }
 
 type GetArgs struct {
-	Key string
+	Key      string
+	ClientID int
+	Seq      int32
+
 	// You'll have to add definitions here.
 }
 
